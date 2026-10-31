@@ -23,9 +23,9 @@
             crimson: {
               50: '#FDF2F4', 100: '#FCE7EB', 700: '#9E1528', 800: '#7A0C18', 900: '#560710', 950: '#380308',
             },
-            ruby: { 800: '#5F0813', 900: '#43050C', 950: '#2A0207', },
-            gold: { 300: '#F5E4B5', 400: '#E8CE87', 500: '#D4AF37', 600: '#AA8820', 700: '#806412', },
-            parchment: { 50: '#FAF6EE', 100: '#F5EEDD', 200: '#EADFC4', }
+            ruby: { 800: '#5F0813', 900: '#43050C', 950: '#2A0207' },
+            gold: { 300: '#F5E4B5', 400: '#E8CE87', 500: '#D4AF37', 600: '#AA8820', 700: '#806412' },
+            parchment: { 50: '#FAF6EE', 100: '#F5EEDD', 200: '#EADFC4' }
           },
           fontFamily: {
             serif: ['"Cormorant Garamond"', 'serif'],
@@ -62,14 +62,13 @@
 </head>
 <body class="bg-ruby-950 text-parchment-50 antialiased selection:bg-crimson-800 selection:text-gold-300">
 
-  <!-- AUDIO PLAYER ELEMENT (Navrai Majhi) -->
+  <!-- AUDIO PLAYER: Navrai Majhi with exact repo path -->
   <audio id="navrai-audio-element" loop preload="auto">
-    <!-- Tries local repository asset first, falls back to direct streaming CDN -->
-    <source src="assets/navrai-majhi.mp3" type="audio/mpeg">
-    <source src="https://cdns.imsms.com/download/107/Navrai-Majhi-English-Subtitles-Mix.mp3" type="audio/mpeg">
+    <source src="assets/navrai_maajhi.mp3" type="audio/mpeg">
+    <source src="https://ankit4yadav4-tech.github.io/wedding-invitation/assets/navrai_maajhi.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- UNVEIL OVERLAY & ENVELOPE -->
+  <!-- LORD GANESHA RED ENVELOPE & TRI-FOLD UNVEIL OVERLAY -->
   <div id="unveil-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/95 backdrop-blur-md perspective-stage overflow-hidden">
     <canvas id="ambient-gold-canvas" class="absolute inset-0 pointer-events-none opacity-40"></canvas>
 
@@ -89,104 +88,4 @@
 
         <div class="relative z-10 text-center pt-2">
           <p class="font-cinzel text-xs md:text-sm tracking-[0.28em] text-gold-300 uppercase">Shree Ganeshay Namah</p>
-          <div class="h-0.5 w-16 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto mt-1"></div>
-        </div>
-
-        <div id="ganesha-seal-btn" class="relative z-10 flex flex-col items-center group my-auto">
-          <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-gold-300 via-gold-500 to-gold-700 p-1 shadow-2xl pulse-seal flex items-center justify-center border border-gold-200">
-            <div class="w-full h-full rounded-full bg-crimson-950 flex items-center justify-center p-3 border border-gold-400/60">
-              <svg viewBox="0 0 100 100" class="w-full h-full text-gold-300" fill="currentColor">
-                <path d="M50 10 L58 24 L52 24 L60 34 L40 34 L48 24 L42 24 Z" fill="#D4AF37" />
-                <path d="M38 36 C22 35 20 48 25 58 C30 65 37 60 40 54" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
-                <path d="M62 36 C78 35 80 48 75 58 C70 65 63 60 60 54" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
-                <path d="M40 40 C44 38 56 38 60 40 C63 46 64 54 61 62 C58 70 55 76 56 81 C57 85 62 86 65 83 C67 81 67 78 65 76" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" />
-                <path d="M43 55 L39 58 L44 59 Z" fill="#FFF" />
-              </svg>
-            </div>
-          </div>
-          <span class="mt-3 font-cinzel text-xs md:text-sm text-gold-300 tracking-widest uppercase font-semibold flex items-center gap-2">
-            <i class="fa-solid fa-envelope-open text-xs"></i> Click to Open Invitation
-          </span>
-        </div>
-
-        <div class="relative z-10 text-center pb-2">
-          <p class="font-cormorant text-2xl md:text-3xl text-gold-200 font-semibold italic">Ankit &amp; Jyoti</p>
-          <p class="text-[11px] font-sans tracking-widest text-parchment-200/80 uppercase">December 2 – 4, 2026</p>
-        </div>
-      </div>
-
-      <!-- TRI-FOLD LETTER -->
-      <div id="trifold-letter-container" class="absolute inset-0 pointer-events-none opacity-0 transition-all duration-700 flex flex-col justify-center items-center">
-        <div id="trifold-paper" class="relative w-full max-w-[580px] shadow-2xl">
-          <div id="panel-top" class="trifold-top-panel relative w-full h-[210px] md:h-[230px] bg-gradient-to-b from-[#FFFDF9] to-[#F7EED9] text-stone-900 rounded-t-xl p-5 border-t-4 border-x-4 border-gold-500 shadow-xl flex flex-col items-center justify-between text-center overflow-hidden z-30">
-            <div class="fold-crease-shadow"></div>
-            <div class="w-full flex items-center justify-between text-gold-700 text-xs border-b border-gold-300 pb-2">
-              <span>॥ शुभ विवाह ॥</span>
-              <span class="font-cinzel text-[10px] tracking-widest uppercase">Sacred Union</span>
-              <span>॥ श्री गणेशाय नमः ॥</span>
-            </div>
-            <div class="my-auto">
-              <p class="text-xs font-cinzel tracking-[0.3em] uppercase text-crimson-800 font-bold">Together With Their Families</p>
-              <h2 class="font-cormorant text-2xl md:text-3xl text-crimson-900 font-bold italic mt-1">Invitation to Celebrate</h2>
-            </div>
-            <div class="w-full flex items-center justify-center gap-3 text-gold-600 text-xs pt-1">
-              <span class="h-px bg-gold-300 flex-1"></span><i class="fa-solid fa-diamond text-[8px]"></i><span class="h-px bg-gold-300 flex-1"></span>
-            </div>
-          </div>
-
-          <div id="panel-middle" class="relative w-full h-[220px] md:h-[240px] bg-[#F7EED9] text-stone-900 p-5 border-x-4 border-gold-500 shadow-inner flex flex-col items-center justify-center text-center overflow-hidden z-20">
-            <div class="fold-crease-shadow"></div>
-            <div class="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-gold-500/80 bg-crimson-950 p-2 shadow-lg flex items-center justify-center mb-1">
-              <svg viewBox="0 0 100 100" class="w-full h-full text-gold-300">
-                <path d="M42 22 C34 38 24 58 20 72 C27 68 34 66 43 66 C45 56 46 44 47 34 C51 48 57 62 61 74 C66 69 72 66 79 66 C73 52 64 36 58 22 Z" fill="currentColor"/>
-              </svg>
-            </div>
-            <h1 class="font-cormorant text-3xl md:text-5xl font-bold text-crimson-900 tracking-tight">
-              Ankit <span class="font-serif italic font-normal text-gold-600 text-2xl md:text-3xl">&amp;</span> Jyoti
-            </h1>
-            <div class="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold-600 to-transparent my-2"></div>
-            <p class="font-cinzel text-xs md:text-sm tracking-widest text-stone-800 font-semibold uppercase">December 2 – 4, 2026</p>
-          </div>
-
-          <div id="panel-bottom" class="trifold-bottom-panel relative w-full h-[210px] md:h-[230px] bg-gradient-to-b from-[#F7EED9] to-[#EFE2C3] text-stone-900 rounded-b-xl p-5 border-b-4 border-x-4 border-gold-500 shadow-xl flex flex-col items-center justify-between text-center overflow-hidden z-10">
-            <div class="fold-crease-shadow"></div>
-            <div class="w-full flex items-center justify-center gap-3 text-gold-600 text-xs">
-              <span class="h-px bg-gold-300 flex-1"></span><i class="fa-solid fa-om text-sm text-crimson-800"></i><span class="h-px bg-gold-300 flex-1"></span>
-            </div>
-            <div class="my-auto">
-              <p class="font-cinzel text-xs text-crimson-900 font-bold uppercase tracking-wider">Four Ceremonies of Love &amp; Joy</p>
-              <p class="font-serif text-sm text-stone-700 italic mt-1">Mehndi • Haldi • Sangeet • Sacred Shadi</p>
-            </div>
-            <p class="text-[11px] font-sans text-stone-600 tracking-wider uppercase border-t border-gold-300/80 pt-2 w-full">Blessings Always &bull; Welcome to Our Celebration</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MAIN WEBSITE -->
-  <div id="main-website-root" class="relative opacity-0 transition-opacity duration-1000">
-    <header class="sticky top-0 z-40 bg-ruby-950/90 backdrop-blur-md border-b border-gold-500/30">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        <a href="#hero" class="flex items-center gap-3 group">
-          <div class="w-11 h-11 rounded-full border border-gold-400 bg-crimson-900 p-1 flex items-center justify-center shadow-lg">
-            <svg viewBox="0 0 100 100" class="w-full h-full text-gold-300">
-              <path d="M42 22 C34 38 24 58 20 72 C27 68 34 66 43 66 C45 56 46 44 47 34 C51 48 57 62 61 74 C66 69 72 66 79 66 C73 52 64 36 58 22 Z" fill="currentColor"/>
-            </svg>
-          </div>
-          <div>
-            <span class="font-cormorant text-2xl font-bold tracking-wide text-gold-200">Ankit &amp; Jyoti</span>
-            <span class="block text-[10px] font-cinzel tracking-[0.25em] text-parchment-200/70 uppercase">Wedding Celebrations</span>
-          </div>
-        </a>
-
-        <nav class="hidden md:flex items-center gap-8 font-cinzel text-xs tracking-widest text-parchment-100">
-          <a href="#events" class="hover:text-gold-300 transition uppercase">Ceremonies</a>
-          <a href="#moments" class="hover:text-gold-300 transition uppercase">Moments</a>
-          <a href="#wishes" class="hover:text-gold-300 transition uppercase">Guestbook</a>
-          <a href="#venue" class="hover:text-gold-300 transition uppercase">Venue</a>
-        </nav>
-
-        <div class="flex items-center gap-3">
-          <!-- Music Status Badge -->
-          <button id="audio-toggle-btn" class
+          <div class="h-0.5 w-16 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto mt
