@@ -140,6 +140,41 @@
       -webkit-text-fill-color: transparent;
     }
 
+    /* Soundwave animation for Navrai Majhi music badge */
+    @keyframes wave-bounce {
+      0%, 100% { height: 4px; }
+      50% { height: 16px; }
+    }
+    .wave-bar {
+      width: 2.5px;
+      background: #E8CE87;
+      border-radius: 9999px;
+      display: inline-block;
+      animation: wave-bounce 1s ease-in-out infinite;
+    }
+    .wave-bar:nth-child(2) { animation-delay: 0.2s; height: 12px; }
+    .wave-bar:nth-child(3) { animation-delay: 0.4s; height: 16px; }
+    .wave-bar:nth-child(4) { animation-delay: 0.15s; height: 8px; }
+    .music-playing .wave-bar {
+      animation-play-state: running;
+    }
+    .music-paused .wave-bar {
+      animation-play-state: paused;
+      height: 3px !important;
+    }
+
+    /* Rotating vinyl effect */
+    @keyframes rotate-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .spin-record {
+      animation: rotate-slow 6s linear infinite;
+    }
+    .spin-paused {
+      animation-play-state: paused;
+    }
+
     /* Custom scrollbar */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #2A0207; }
@@ -332,6 +367,12 @@
   <!-- ============================================================== -->
   <div id="main-website-root" class="relative opacity-0 transition-opacity duration-1000">
 
+    <!-- REAL AUDIO ELEMENT: NAVRAI MAJHI -->
+    <audio id="navrai-audio-element" loop preload="auto">
+      <source src="./assets/navrai-majhi.mp3" type="audio/mpeg">
+      <source src="assets/navrai-majhi.mp3" type="audio/mpeg">
+    </audio>
+
     <!-- Sticky Navigation Bar -->
     <header class="sticky top-0 z-40 bg-ruby-950/95 backdrop-blur-md border-b border-gold-500/30">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -357,10 +398,16 @@
           <a href="#venue" class="hover:text-gold-300 transition uppercase">Venue &amp; Travel</a>
         </nav>
 
-        <!-- Right Controls: Audio Synth Toggle -->
-        <div class="flex items-center gap-4">
-          <button id="audio-toggle-btn" class="w-10 h-10 rounded-full border border-gold-500/50 bg-crimson-900/80 text-gold-300 flex items-center justify-center hover:bg-crimson-800 transition shadow" title="Toggle Music">
-            <i class="fa-solid fa-volume-high text-sm"></i>
+        <!-- Right Controls: Navrai Majhi Badge & Audio Toggle -->
+        <div class="flex items-center gap-3">
+          <button id="audio-toggle-btn" class="flex items-center gap-2.5 px-3 py-1.5 rounded-full border border-gold-500/50 bg-crimson-900/90 text-gold-200 hover:bg-crimson-800 transition shadow" title="Toggle Navrai Majhi">
+            <span class="music-bars flex items-end gap-0.5 h-3.5">
+              <span class="w-1 bg-gold-400 rounded-full h-2 animate-pulse"></span>
+              <span class="w-1 bg-gold-400 rounded-full h-3.5 animate-pulse" style="animation-delay: 0.15s"></span>
+              <span class="w-1 bg-gold-400 rounded-full h-1.5 animate-pulse" style="animation-delay: 0.3s"></span>
+            </span>
+            <span class="text-[11px] font-cinzel font-semibold tracking-wider hidden sm:inline">Navrai Majhi</span>
+            <i id="audio-icon" class="fa-solid fa-volume-high text-xs text-gold-300"></i>
           </button>
 
           <!-- Mobile Hamburger Button -->
@@ -740,7 +787,7 @@
         if (hasOpened) return;
         hasOpened = true;
 
-        initAndStartAudio();
+        playNavraiMajhi();
 
         // Step 1: Open Envelope Flap in 3D
         envelopeFlap.style.transform = 'rotateX(180deg)';
@@ -788,7 +835,7 @@
       if (skipBtn) {
         skipBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          initAndStartAudio();
+          playNavraiMajhi();
           unveilOverlay.style.display = 'none';
           mainWebsite.style.opacity = '1';
         });
@@ -835,60 +882,56 @@
         });
       }
 
-      // 3. AMBIENT SOUND SYNTHESIZER (WEB AUDIO API)
-      let audioCtx = null;
-      let isPlaying = false;
-      let noteInterval = null;
+      // 3. AUDIO CONTROLLER: NAVRAI MAJHI (MP3 PLAYBACK & TOGGLE)
+      const audioElement = document.getElementById('navrai-audio-element');
       const audioBtn = document.getElementById('audio-toggle-btn');
+      const audioIcon = document.getElementById('audio-icon');
+      const musicBars = document.querySelector('.music-bars');
+      let isPlaying = false;
 
-      function initAndStartAudio() {
-        if (!audioCtx) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          audioCtx = new AudioContext();
-        }
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume();
-        }
-        if (!isPlaying) {
-          startHarpNotes();
-          isPlaying = true;
-          if (audioBtn) audioBtn.innerHTML = '<i class="fa-solid fa-volume-high text-sm"></i>';
+      function playNavraiMajhi() {
+        if (!audioElement) return;
+        audioElement.volume = 0.85;
+        const playPromise = audioElement.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            isPlaying = true;
+            updateAudioUI(true);
+          }).catch(err => {
+            console.log("Audio waiting for user gesture:", err);
+          });
         }
       }
 
-      function startHarpNotes() {
-        const pentatonicScale = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33];
-        noteInterval = setInterval(() => {
-          if (!isPlaying || !audioCtx) return;
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          
-          const freq = pentatonicScale[Math.floor(Math.random() * pentatonicScale.length)];
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      function pauseNavraiMajhi() {
+        if (!audioElement) return;
+        audioElement.pause();
+        isPlaying = false;
+        updateAudioUI(false);
+      }
 
-          gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.06, audioCtx.currentTime + 0.1);
-          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.8);
+      function toggleNavraiMajhi() {
+        if (isPlaying) {
+          pauseNavraiMajhi();
+        } else {
+          playNavraiMajhi();
+        }
+      }
 
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-
-          osc.start();
-          osc.stop(audioCtx.currentTime + 2.0);
-        }, 900);
+      function updateAudioUI(playing) {
+        if (audioIcon) {
+          audioIcon.className = playing ? 'fa-solid fa-volume-high text-xs text-gold-300' : 'fa-solid fa-volume-xmark text-xs text-stone-400';
+        }
+        if (musicBars) {
+          musicBars.style.opacity = playing ? '1' : '0.4';
+          musicBars.querySelectorAll('span').forEach(bar => {
+            bar.style.animationPlayState = playing ? 'running' : 'paused';
+          });
+        }
       }
 
       if (audioBtn) {
-        audioBtn.addEventListener('click', () => {
-          if (isPlaying) {
-            clearInterval(noteInterval);
-            isPlaying = false;
-            audioBtn.innerHTML = '<i class="fa-solid fa-volume-xmark text-sm"></i>';
-          } else {
-            initAndStartAudio();
-          }
-        });
+        audioBtn.addEventListener('click', toggleNavraiMajhi);
       }
 
       // 4. CAROUSEL SLIDER CONTROLLER (4 CEREMONIES)
