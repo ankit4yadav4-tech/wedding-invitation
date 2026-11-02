@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ankit &amp; Jyoti | Royal Wedding Celebration</title>
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Refined Royal Typography Suite -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&family=Rozha+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
 
-  <!-- FontAwesome -->
+  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -21,17 +21,39 @@
         extend: {
           colors: {
             crimson: {
-              50: '#FDF2F4', 100: '#FCE7EB', 700: '#9E1528', 800: '#7A0C18', 900: '#560710', 950: '#380308',
+              700: '#9E1528',
+              800: '#7A0C18',
+              900: '#560710',
+              950: '#380308',
             },
-            ruby: { 800: '#5F0813', 900: '#43050C', 950: '#2A0207' },
-            gold: { 300: '#F5E4B5', 400: '#E8CE87', 500: '#D4AF37', 600: '#AA8820', 700: '#806412' },
-            parchment: { 50: '#FAF6EE', 100: '#F5EEDD', 200: '#EADFC4' }
+            ruby: {
+              800: '#5F0813',
+              900: '#43050C',
+              950: '#2A0207',
+            },
+            gold: {
+              100: '#FAF1D6',
+              200: '#F5E4B3',
+              300: '#E8CE87',
+              400: '#D4AF37',
+              500: '#C59A27',
+              600: '#A67D18',
+              700: '#7E5B0B'
+            },
+            parchment: {
+              50: '#FFFDF9',
+              100: '#FAF4EB',
+              200: '#F5EEDD',
+            }
           },
           fontFamily: {
-            serif: ['"Cormorant Garamond"', 'serif'],
+            cormorant: ['"Cormorant Garamond"', 'serif'],
             cinzel: ['"Cinzel"', 'serif'],
-            sans: ['"Montserrat"', 'sans-serif'],
-            rozha: ['"Rozha One"', 'serif'],
+            lora: ['"Lora"', 'serif'],
+            /* Fallback aliases to ensure 100% template stability */
+            playfair: ['"Cormorant Garamond"', 'serif'],
+            marcellus: ['"Cinzel"', 'serif'],
+            sans: ['"Lora"', 'serif'],
           }
         }
       }
@@ -39,22 +61,94 @@
   </script>
 
   <style>
-    body { font-family: 'Montserrat', sans-serif; background-color: #2A0207; color: #FAF6EE; overflow-x: hidden; }
-    .font-cinzel { font-family: 'Cinzel', serif; }
-    .font-cormorant { font-family: 'Cormorant Garamond', serif; }
-    .perspective-stage { perspective: 2000px; perspective-origin: center center; }
-    .preserve-3d { transform-style: preserve-3d; }
-    .envelope-shadow { box-shadow: 0 35px 70px -15px rgba(0, 0, 0, 0.85), 0 0 50px rgba(212, 175, 55, 0.2); }
-    .trifold-top-panel { transform-origin: bottom center; transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); transform: rotateX(179.6deg); }
-    .trifold-bottom-panel { transform-origin: top center; transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); transform: rotateX(-179.6deg); }
-    .unfolded-top { transform: rotateX(0deg) !important; }
-    .unfolded-bottom { transform: rotateX(0deg) !important; }
-    .fold-crease-shadow { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(42, 2, 7, 0.35) 0%, rgba(42, 2, 7, 0) 25%, rgba(42, 2, 7, 0) 75%, rgba(42, 2, 7, 0.35) 100%); }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Lora', serif;
+      background-color: #2A0207;
+      color: #FFFDF9;
+      overflow-x: hidden;
+    }
+
+    .font-cormorant {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .font-cinzel {
+      font-family: 'Cinzel', serif;
+    }
+
+    .font-lora {
+      font-family: 'Lora', serif;
+    }
+
+    /* 3D Perspective Stage for Envelope & Tri-Fold */
+    .perspective-stage {
+      perspective: 2000px;
+      perspective-origin: center center;
+    }
+
+    .preserve-3d {
+      transform-style: preserve-3d;
+    }
+
+    .envelope-shadow {
+      box-shadow: 0 32px 75px -15px rgba(0, 0, 0, 0.9), 0 0 45px rgba(212, 175, 55, 0.25);
+    }
+
+    /* Tri-Fold Panels 3D Folding */
+    .trifold-top-panel {
+      transform-origin: bottom center;
+      transition: transform 1.25s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 1.25s ease;
+      transform: rotateX(179.6deg);
+    }
+
+    .trifold-bottom-panel {
+      transform-origin: top center;
+      transition: transform 1.25s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 1.25s ease;
+      transform: rotateX(-179.6deg);
+    }
+
+    /* Unfolded State Classes */
+    .unfolded-top {
+      transform: rotateX(0deg) !important;
+    }
+
+    .unfolded-bottom {
+      transform: rotateX(0deg) !important;
+    }
+
+    /* Paper Crease Shading */
+    .fold-crease-shadow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(to bottom, rgba(42, 2, 7, 0.32) 0%, rgba(42, 2, 7, 0) 25%, rgba(42, 2, 7, 0) 75%, rgba(42, 2, 7, 0.32) 100%);
+      transition: opacity 1s ease;
+    }
+
+    /* Wax Seal Gentle Pulsing */
     @keyframes seal-pulse {
       0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); }
-      50% { transform: scale(1.04); box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+      50% { transform: scale(1.04); box-shadow: 0 0 0 16px rgba(212, 175, 55, 0); }
     }
-    .pulse-seal { animation: seal-pulse 2.4s infinite ease-in-out; }
+    .pulse-seal {
+      animation: seal-pulse 2.2s infinite ease-in-out;
+    }
+
+    /* Radiant Liquid Gold Text */
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #FFF8E1 0%, #F5E4B3 30%, #D4AF37 70%, #9F761A 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #2A0207; }
     ::-webkit-scrollbar-thumb { background: #7A0C18; border-radius: 4px; border: 1px solid #D4AF37; }
@@ -62,356 +156,566 @@
 </head>
 <body class="bg-ruby-950 text-parchment-50 antialiased selection:bg-crimson-800 selection:text-gold-300">
 
-  <!-- AUDIO PLAYER: Navrai Majhi with exact repo path -->
-  <audio id="navrai-audio-element" loop preload="auto">
-    <source src="assets/navrai_maajhi.mp3" type="audio/mpeg">
-    <source src="https://ankit4yadav4-tech.github.io/wedding-invitation/assets/navrai_maajhi.mp3" type="audio/mpeg">
-  </audio>
+  <!-- ============================================================== -->
+  <!-- MASTER SVG DEFS: CIRCULAR CALLIGRAPHIC AJ MONOGRAM & GANESHA   -->
+  <!-- ============================================================== -->
+  <svg class="hidden" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- CIRCULAR AJ MONOGRAM WITH CONCENTRIC GOLD BORDERS -->
+      <g id="aj-monogram">
+        <circle cx="360" cy="360" r="350" fill="#2A0207"/>
+        <circle cx="360" cy="360" r="338" fill="none" stroke="currentColor" stroke-width="8"/>
+        <circle cx="360" cy="360" r="316" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="6,4" opacity="0.8"/>
+        <!-- Calligraphic Flourishes -->
+        <path d="M 178 185 C 130 140 102 190 124 226 C 144 258 182 250 186 220 C 190 190 164 180 152 194 C 142 206 148 220 158 220" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <path d="M 148 220 C 102 250 70 315 102 380 C 132 438 212 430 230 370 C 245 320 205 285 172 300 C 144 312 148 352 170 358" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+        <path d="M 265 500 C 220 545 185 595 240 620 C 295 645 345 585 308 548 C 280 520 250 548 258 570" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <path d="M 435 470 C 495 500 565 480 575 420 C 585 360 530 340 510 380 C 490 415 525 445 550 430" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>
+        <path d="M 475 545 C 515 590 570 570 575 530 C 580 495 548 490 532 510" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+        <!-- Flourished 'A' -->
+        <path d="M 400 120 C 360 200 290 335 195 445 C 145 502 102 480 110 445 C 122 395 180 330 278 265 C 352 215 388 140 400 120 Z" fill="currentColor"/>
+        <path d="M 400 120 C 392 195 368 295 345 385 C 332 430 342 450 358 450 C 372 450 388 425 400 395 L 412 405 C 388 460 360 480 332 472 C 305 465 302 428 315 372 C 340 272 385 145 400 120 Z" fill="currentColor"/>
+        <path d="M 215 350 C 245 340 292 332 348 338 C 402 344 455 325 485 295 C 495 285 482 270 468 278 C 430 295 382 308 325 305 C 265 302 225 322 210 342 Z" fill="currentColor"/>
+        <!-- Interlocking 'J' -->
+        <path d="M 460 225 C 510 215 580 200 615 198 C 628 198 615 215 595 228 C 545 262 515 315 490 385 L 468 375 C 495 305 530 255 578 225 C 535 230 488 238 460 225 Z" fill="currentColor"/>
+        <path d="M 490 385 C 465 455 435 535 395 595 C 350 665 285 695 250 655 C 225 625 242 585 270 582 C 292 580 304 598 295 615 C 285 632 265 632 260 625 C 255 620 258 615 262 612 C 265 610 272 612 272 616 C 272 625 258 638 280 648 C 315 660 368 608 405 540 C 445 470 478 380 490 385 Z" fill="currentColor"/>
+      </g>
 
-  <!-- LORD GANESHA RED ENVELOPE & TRI-FOLD UNVEIL OVERLAY -->
+      <!-- SACRED LORD GANESHA EMBLEM -->
+      <g id="ganesha-symbol">
+        <path d="M50 8 L58 24 L52 24 L60 34 L40 34 L48 24 L42 24 Z" fill="currentColor" />
+        <path d="M48 28 L52 28 L52 38 L48 38 Z M45 31 C47 33 47 35 45 36 Z M55 31 C53 33 53 35 55 36 Z" fill="currentColor" />
+        <path d="M38 36 C22 35 20 48 25 58 C30 65 37 60 40 54" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M62 36 C78 35 80 48 75 58 C70 65 63 60 60 54" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <path d="M40 40 C44 38 56 38 60 40 C63 46 64 54 61 62 C58 70 55 76 56 81 C57 85 62 86 65 83 C67 81 67 78 65 76" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        <path d="M43 55 L38 58 L44 59 Z" fill="#FFF" />
+        <circle cx="68" cy="74" r="3.5" fill="currentColor" />
+        <circle cx="50" cy="50" r="44" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2,3" opacity="0.6"/>
+      </g>
+    </defs>
+  </svg>
+
+  <!-- ============================================================== -->
+  <!-- 1. LORD GANESHA ENVELOPE & 3D TRI-FOLD UNVEIL OVERLAY          -->
+  <!-- ============================================================== -->
   <div id="unveil-overlay" class="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/95 backdrop-blur-md perspective-stage overflow-hidden">
+    
+    <!-- Background Gold Particles Canvas -->
     <canvas id="ambient-gold-canvas" class="absolute inset-0 pointer-events-none opacity-40"></canvas>
 
-    <button id="skip-intro-btn" class="absolute top-6 right-6 z-50 text-gold-300/80 hover:text-gold-300 text-xs tracking-widest font-cinzel uppercase px-4 py-2 border border-gold-500/30 rounded-full bg-crimson-950/60 backdrop-blur hover:bg-crimson-900 transition">
+    <!-- Skip Intro Button -->
+    <button id="skip-intro-btn" class="absolute top-6 right-6 z-50 text-gold-300/90 hover:text-white text-xs tracking-widest font-cinzel uppercase px-4 py-2 border border-gold-500/40 rounded-full bg-crimson-950/80 backdrop-blur shadow-lg transition">
       Skip Intro <i class="fa-solid fa-angles-right ml-1"></i>
     </button>
 
+    <!-- RED ENVELOPE CONTAINER -->
     <div id="envelope-wrapper" class="relative w-[92vw] max-w-[540px] aspect-[16/11] preserve-3d transition-all duration-1000 cursor-pointer">
-      <div id="envelope-box" class="relative w-full h-full rounded-2xl bg-gradient-to-br from-crimson-900 via-crimson-800 to-ruby-950 p-6 md:p-8 envelope-shadow border-2 border-gold-500/50 flex flex-col items-center justify-between preserve-3d">
+      
+      <!-- Envelope Outer Card -->
+      <div id="envelope-box" class="relative w-full h-full rounded-2xl bg-gradient-to-br from-crimson-900 via-crimson-800 to-ruby-950 p-6 md:p-8 envelope-shadow border-2 border-gold-500/60 flex flex-col items-center justify-between preserve-3d">
         
-        <div class="absolute top-3 left-3 text-gold-400/40 text-lg"><i class="fa-solid fa-bahai"></i></div>
-        <div class="absolute top-3 right-3 text-gold-400/40 text-lg"><i class="fa-solid fa-bahai"></i></div>
-        <div class="absolute bottom-3 left-3 text-gold-400/40 text-lg"><i class="fa-solid fa-bahai"></i></div>
-        <div class="absolute bottom-3 right-3 text-gold-400/40 text-lg"><i class="fa-solid fa-bahai"></i></div>
+        <!-- Corner Filigrees -->
+        <div class="absolute top-3 left-3 text-gold-400/40 text-lg pointer-events-none"><i class="fa-solid fa-bahai"></i></div>
+        <div class="absolute top-3 right-3 text-gold-400/40 text-lg pointer-events-none"><i class="fa-solid fa-bahai"></i></div>
+        <div class="absolute bottom-3 left-3 text-gold-400/40 text-lg pointer-events-none"><i class="fa-solid fa-bahai"></i></div>
+        <div class="absolute bottom-3 right-3 text-gold-400/40 text-lg pointer-events-none"><i class="fa-solid fa-bahai"></i></div>
 
-        <div id="envelope-flap" class="absolute -top-1 left-0 right-0 h-1/2 bg-gradient-to-b from-crimson-950 to-crimson-900 rounded-t-2xl border-t-2 border-x-2 border-gold-500/50 origin-top transition-transform duration-700 pointer-events-none" style="clip-path: polygon(0 0, 100% 0, 50% 100%);"></div>
+        <!-- 3D Envelope Flap -->
+        <div id="envelope-flap" class="absolute -top-1 left-0 right-0 h-1/2 bg-gradient-to-b from-crimson-950 to-crimson-900 rounded-t-2xl border-t-2 border-x-2 border-gold-500/50 origin-top preserve-3d transition-transform duration-700 pointer-events-none" style="clip-path: polygon(0 0, 100% 0, 50% 100%);"></div>
 
+        <!-- Top Sanskrit Invocation -->
         <div class="relative z-10 text-center pt-2">
-          <p class="font-cinzel text-xs md:text-sm tracking-[0.28em] text-gold-300 uppercase">Shree Ganeshay Namah</p>
+          <p class="font-cinzel text-xs md:text-sm tracking-[0.3em] text-gold-300 uppercase">Shree Ganeshay Namah</p>
           <div class="h-0.5 w-16 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto mt-1"></div>
         </div>
 
+        <!-- LORD GANESHA SACRED WAX MEDALLION -->
         <div id="ganesha-seal-btn" class="relative z-10 flex flex-col items-center group my-auto">
-          <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-gold-300 via-gold-500 to-gold-700 p-1 shadow-2xl pulse-seal flex items-center justify-center border border-gold-200">
-            <div class="w-full h-full rounded-full bg-crimson-950 flex items-center justify-center p-3 border border-gold-400/60">
-              <svg viewBox="0 0 100 100" class="w-full h-full text-gold-300" fill="currentColor">
-                <path d="M50 10 L58 24 L52 24 L60 34 L40 34 L48 24 L42 24 Z" fill="#D4AF37" />
-                <path d="M38 36 C22 35 20 48 25 58 C30 65 37 60 40 54" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
-                <path d="M62 36 C78 35 80 48 75 58 C70 65 63 60 60 54" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
-                <path d="M40 40 C44 38 56 38 60 40 C63 46 64 54 61 62 C58 70 55 76 56 81 C57 85 62 86 65 83 C67 81 67 78 65 76" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" />
-                <path d="M43 55 L39 58 L44 59 Z" fill="#FFF" />
+          <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-gold-200 via-gold-400 to-gold-600 p-1 shadow-2xl pulse-seal flex items-center justify-center border border-gold-100">
+            <div class="relative w-full h-full rounded-full bg-crimson-950 flex items-center justify-center p-3.5 border border-gold-400/70 overflow-hidden">
+              <!-- SVG Ganesha Fallback (Always crisp and visible by default) -->
+              <svg viewBox="0 0 100 100" class="w-full h-full text-gold-300 filter drop-shadow">
+                <use href="#ganesha-symbol" />
               </svg>
+              <!-- Primary Asset with graceful chain: assets/ganesha.png -> assets/ganesha_idol.png -> SVG fallback -->
+              <img src="assets/ganesha.png" alt="Shree Ganesha" class="absolute inset-0 w-full h-full object-contain p-2 rounded-full opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.onerror=null; this.src='assets/ganesha_idol.png'; this.onerror=function(){this.remove();}">
             </div>
           </div>
-          <span class="mt-3 font-cinzel text-xs md:text-sm text-gold-300 tracking-widest uppercase font-semibold flex items-center gap-2">
+
+          <span class="mt-3 font-cinzel text-xs md:text-sm text-gold-300 tracking-widest uppercase font-semibold flex items-center gap-2 group-hover:text-gold-200 transition">
             <i class="fa-solid fa-envelope-open text-xs"></i> Click to Open Invitation
           </span>
         </div>
 
+        <!-- Couple Name on Envelope -->
         <div class="relative z-10 text-center pb-2">
-          <p class="font-cormorant text-2xl md:text-3xl text-gold-200 font-semibold italic">Ankit &amp; Jyoti</p>
-          <p class="text-[11px] font-sans tracking-widest text-parchment-200/80 uppercase">December 2 – 4, 2026</p>
+          <p class="font-cormorant italic text-3xl md:text-4xl text-gold-200 font-normal tracking-wide">Ankit &amp; Jyoti</p>
+          <p class="text-[11px] font-cinzel tracking-widest text-parchment-200/80 uppercase mt-0.5">December 2 – 4, 2026</p>
         </div>
+
       </div>
 
-      <!-- 3-PART TRI-FOLD LETTER -->
-      <div id="trifold-letter-container" class="absolute inset-0 pointer-events-none opacity-0 transition-all duration-700 flex flex-col justify-center items-center">
-        <div id="trifold-paper" class="relative w-full max-w-[580px] shadow-2xl">
-          <div id="panel-top" class="trifold-top-panel relative w-full h-[210px] md:h-[230px] bg-gradient-to-b from-[#FFFDF9] to-[#F7EED9] text-stone-900 rounded-t-xl p-5 border-t-4 border-x-4 border-gold-500 shadow-xl flex flex-col items-center justify-between text-center overflow-hidden z-30">
+      <!-- ============================================================== -->
+      <!-- 2. THE 3-PART TRI-FOLD LETTER (UNFOLDS UP AND DOWN)           -->
+      <!-- ============================================================== -->
+      <div id="trifold-letter-container" class="absolute inset-0 pointer-events-none opacity-0 preserve-3d transition-all duration-700 flex flex-col justify-center items-center">
+        
+        <div id="trifold-paper" class="relative w-full max-w-[580px] preserve-3d transition-transform duration-1000 shadow-2xl">
+          
+          <!-- PANEL 1: TOP PANEL (Flips UPWARD) -->
+          <div id="panel-top" class="trifold-top-panel relative w-full h-[210px] md:h-[230px] bg-gradient-to-b from-[#FFFDF9] to-[#F7EED9] text-stone-900 rounded-t-xl p-5 border-t-4 border-x-4 border-gold-500 shadow-xl flex flex-col items-center justify-between text-center overflow-hidden preserve-3d z-30">
             <div class="fold-crease-shadow"></div>
+            
             <div class="w-full flex items-center justify-between text-gold-700 text-xs border-b border-gold-300 pb-2">
-              <span>॥ शुभ विवाह ॥</span>
+              <span class="font-cinzel">॥ शुभ विवाह ॥</span>
               <span class="font-cinzel text-[10px] tracking-widest uppercase">Sacred Union</span>
-              <span>॥ श्री गणेशाय नमः ॥</span>
+              <span class="font-cinzel">॥ श्री गणेशाय नमः ॥</span>
             </div>
+
             <div class="my-auto">
               <p class="text-xs font-cinzel tracking-[0.3em] uppercase text-crimson-800 font-bold">Together With Their Families</p>
-              <h2 class="font-cormorant text-2xl md:text-3xl text-crimson-900 font-bold italic mt-1">Invitation to Celebrate</h2>
+              <h2 class="font-cinzel text-xl md:text-2xl text-crimson-900 font-bold mt-1 tracking-wider uppercase">Invitation to Celebrate</h2>
+              <p class="text-stone-700 text-xs md:text-sm font-lora italic mt-1 max-w-md mx-auto">
+                Request the honour of your auspicious presence and blessings at the wedding festivities of their beloved
+              </p>
             </div>
+
             <div class="w-full flex items-center justify-center gap-3 text-gold-600 text-xs pt-1">
-              <span class="h-px bg-gold-300 flex-1"></span><i class="fa-solid fa-diamond text-[8px]"></i><span class="h-px bg-gold-300 flex-1"></span>
+              <span class="h-px bg-gold-300 flex-1"></span>
+              <i class="fa-solid fa-diamond text-[8px]"></i>
+              <span class="h-px bg-gold-300 flex-1"></span>
             </div>
           </div>
 
+          <!-- PANEL 2: MIDDLE PANEL (Anchor base of the folded letter) -->
           <div id="panel-middle" class="relative w-full h-[220px] md:h-[240px] bg-[#F7EED9] text-stone-900 p-5 border-x-4 border-gold-500 shadow-inner flex flex-col items-center justify-center text-center overflow-hidden z-20">
             <div class="fold-crease-shadow"></div>
-            <div class="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-gold-500/80 bg-crimson-950 p-2 shadow-lg flex items-center justify-center mb-1">
-              <svg viewBox="0 0 100 100" class="w-full h-full text-gold-300">
-                <path d="M42 22 C34 38 24 58 20 72 C27 68 34 66 43 66 C45 56 46 44 47 34 C51 48 57 62 61 74 C66 69 72 66 79 66 C73 52 64 36 58 22 Z" fill="currentColor"/>
-                <path d="M52 28 C57 44 65 60 70 74 C73 82 72 88 66 91 C60 93 54 89 53 84" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+
+            <!-- Interlocking Circular Monogram Cameo -->
+            <div class="relative w-14 h-14 md:w-16 md:h-16 rounded-full border border-gold-500/80 bg-crimson-950 p-1 shadow-lg flex items-center justify-center mb-1 overflow-hidden">
+              <svg viewBox="0 0 720 720" class="w-full h-full text-gold-300">
+                <use href="#aj-monogram" />
               </svg>
+              <img src="assets/monogram.png" alt="AJ Monogram" class="absolute inset-0 w-full h-full object-cover rounded-full opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.remove()">
             </div>
-            <h1 class="font-cormorant text-3xl md:text-5xl font-bold text-crimson-900 tracking-tight">
-              Ankit <span class="font-serif italic font-normal text-gold-600 text-2xl md:text-3xl">&amp;</span> Jyoti
+
+            <!-- Refined Elegant Names in Cormorant Garamond -->
+            <h1 class="font-cormorant italic text-3xl md:text-5xl font-normal text-crimson-900 tracking-wide">
+              Ankit <span class="font-cormorant italic text-gold-600 text-2xl md:text-4xl">&amp;</span> Jyoti
             </h1>
+
             <div class="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold-600 to-transparent my-2"></div>
-            <p class="font-cinzel text-xs md:text-sm tracking-widest text-stone-800 font-semibold uppercase">December 2 – 4, 2026</p>
+            
+            <p class="font-cinzel text-xs md:text-sm tracking-widest text-stone-800 font-semibold uppercase">
+              December 2 – 4, 2026
+            </p>
           </div>
 
-          <div id="panel-bottom" class="trifold-bottom-panel relative w-full h-[210px] md:h-[230px] bg-gradient-to-b from-[#F7EED9] to-[#EFE2C3] text-stone-900 rounded-b-xl p-5 border-b-4 border-x-4 border-gold-500 shadow-xl flex flex-col items-center justify-between text-center overflow-hidden z-10">
+          <!-- PANEL 3: BOTTOM PANEL (Flips DOWNWARD) -->
+          <div id="panel-bottom" class="trifold-bottom-panel relative w-full h-[210px] md:h-[230px] bg-gradient-to-b from-[#F7EED9] to-[#EFE2C3] text-stone-900 rounded-b-xl p-5 border-b-4 border-x-4 border-gold-500 shadow-xl flex flex-col items-center justify-between text-center overflow-hidden preserve-3d z-10">
             <div class="fold-crease-shadow"></div>
+
             <div class="w-full flex items-center justify-center gap-3 text-gold-600 text-xs">
-              <span class="h-px bg-gold-300 flex-1"></span><i class="fa-solid fa-om text-sm text-crimson-800"></i><span class="h-px bg-gold-300 flex-1"></span>
+              <span class="h-px bg-gold-300 flex-1"></span>
+              <i class="fa-solid fa-om text-sm text-crimson-800"></i>
+              <span class="h-px bg-gold-300 flex-1"></span>
             </div>
+
             <div class="my-auto">
               <p class="font-cinzel text-xs text-crimson-900 font-bold uppercase tracking-wider">Four Ceremonies of Love &amp; Joy</p>
-              <p class="font-serif text-sm text-stone-700 italic mt-1">Mehndi • Haldi • Sangeet • Sacred Shadi</p>
+              <p class="font-lora italic text-sm text-stone-700 mt-1">Mehndi • Haldi • Sangeet • Sacred Shadi</p>
+              
+              <div class="mt-3">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-crimson-900 text-gold-300 text-xs font-cinzel tracking-wider shadow">
+                  <i class="fa-solid fa-location-dot text-gold-400"></i> Entering Site...
+                </span>
+              </div>
             </div>
-            <p class="text-[11px] font-sans text-stone-600 tracking-wider uppercase border-t border-gold-300/80 pt-2 w-full">Blessings Always &bull; Welcome to Our Celebration</p>
+
+            <p class="text-[11px] font-cinzel text-stone-600 tracking-wider uppercase border-t border-gold-300/80 pt-2 w-full">
+              Blessings Always &bull; Welcome to Our Celebration
+            </p>
           </div>
+
         </div>
       </div>
+
     </div>
   </div>
 
-  <!-- MAIN INVITATION PAGE -->
+  <!-- ============================================================== -->
+  <!-- 2. MAIN CELEBRATION WEBSITE ROOT                               -->
+  <!-- ============================================================== -->
   <div id="main-website-root" class="relative opacity-0 transition-opacity duration-1000">
-    <header class="sticky top-0 z-40 bg-ruby-950/90 backdrop-blur-md border-b border-gold-500/30">
+
+    <!-- AUDIO ELEMENT: NAVRAI MAJHI -->
+    <audio id="navrai-audio-element" loop preload="auto">
+      <source src="assets/navrai_maajhi.mp3" type="audio/mpeg">
+      <source src="https://ankit4yadav4-tech.github.io/wedding-invitation/assets/navrai_maajhi.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Sticky Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-ruby-950/95 backdrop-blur-md border-b border-gold-500/30">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        
+        <!-- Brand with Circular Interlocking Monogram -->
         <a href="#hero" class="flex items-center gap-3 group">
-          <div class="w-11 h-11 rounded-full border border-gold-400 bg-crimson-900 p-1 flex items-center justify-center shadow-lg">
-            <svg viewBox="0 0 100 100" class="w-full h-full text-gold-300">
-              <path d="M42 22 C34 38 24 58 20 72 C27 68 34 66 43 66 C45 56 46 44 47 34 C51 48 57 62 61 74 C66 69 72 66 79 66 C73 52 64 36 58 22 Z" fill="currentColor"/>
-              <path d="M52 28 C57 44 65 60 70 74 C73 82 72 88 66 91 C60 93 54 89 53 84" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <div class="relative w-12 h-12 rounded-full border border-gold-400 bg-crimson-900 p-0.5 flex items-center justify-center shadow-lg group-hover:scale-105 transition overflow-hidden">
+            <svg viewBox="0 0 720 720" class="w-full h-full text-gold-300">
+              <use href="#aj-monogram" />
             </svg>
+            <img src="assets/monogram.png" alt="AJ Monogram" class="absolute inset-0 w-full h-full object-cover rounded-full opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.remove()">
           </div>
           <div>
-            <span class="font-cormorant text-2xl font-bold tracking-wide text-gold-200">Ankit &amp; Jyoti</span>
+            <span class="font-cormorant italic text-2xl md:text-3xl font-medium tracking-wide text-gold-200">Ankit &amp; Jyoti</span>
             <span class="block text-[10px] font-cinzel tracking-[0.25em] text-parchment-200/70 uppercase">Wedding Celebrations</span>
           </div>
         </a>
 
-        <nav class="hidden md:flex items-center gap-8 font-cinzel text-xs tracking-widest text-parchment-100">
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-8 font-cinzel text-xs tracking-widest text-parchment-100 font-semibold">
           <a href="#events" class="hover:text-gold-300 transition uppercase">Ceremonies</a>
           <a href="#moments" class="hover:text-gold-300 transition uppercase">Moments</a>
           <a href="#wishes" class="hover:text-gold-300 transition uppercase">Guestbook</a>
-          <a href="#venue" class="hover:text-gold-300 transition uppercase">Venue</a>
+          <a href="#venue" class="hover:text-gold-300 transition uppercase">Venue &amp; Travel</a>
         </nav>
 
+        <!-- Right Controls: Audio Toggle with Animated Sound Bars -->
         <div class="flex items-center gap-3">
-          <!-- Song Status & Controller -->
-          <button id="audio-toggle-btn" class="px-3.5 py-1.5 rounded-full border border-gold-500/50 bg-crimson-900/80 text-gold-300 flex items-center gap-2 hover:bg-crimson-800 transition shadow text-xs font-cinzel">
-            <i class="fa-solid fa-music animate-spin text-[10px]"></i>
-            <span id="audio-status-text">Navrai Majhi</span>
+          <button id="audio-toggle-btn" class="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-gold-500/50 bg-crimson-900/90 text-gold-200 hover:bg-crimson-800 transition shadow" title="Toggle Navrai Majhi">
+            <span class="music-bars flex items-end gap-0.5 h-3.5">
+              <span class="w-1 bg-gold-400 rounded-full h-2 animate-pulse"></span>
+              <span class="w-1 bg-gold-400 rounded-full h-3.5 animate-pulse" style="animation-delay: 0.15s"></span>
+              <span class="w-1 bg-gold-400 rounded-full h-1.5 animate-pulse" style="animation-delay: 0.3s"></span>
+            </span>
+            <span class="text-[11px] font-cinzel font-semibold tracking-wider hidden sm:inline">Navrai Majhi</span>
+            <i id="audio-icon" class="fa-solid fa-volume-high text-xs text-gold-300"></i>
           </button>
-          <button id="mobile-menu-btn" class="md:hidden text-gold-300 text-xl p-2"><i class="fa-solid fa-bars"></i></button>
+
+          <!-- Mobile Hamburger Button -->
+          <button id="mobile-menu-btn" class="md:hidden text-gold-300 text-xl p-2 focus:outline-none" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
+          </button>
         </div>
+
       </div>
 
+      <!-- Mobile Navigation Drawer -->
       <div id="mobile-nav-drawer" class="hidden md:hidden bg-crimson-950 border-b border-gold-500/40 px-6 py-4 flex flex-col gap-4 font-cinzel text-xs tracking-widest text-center">
-        <a href="#events" class="mobile-nav-link py-2 text-parchment-100">Ceremonies</a>
-        <a href="#moments" class="mobile-nav-link py-2 text-parchment-100">Moments</a>
-        <a href="#wishes" class="mobile-nav-link py-2 text-parchment-100">Guestbook</a>
-        <a href="#venue" class="mobile-nav-link py-2 text-parchment-100">Venue</a>
+        <a href="#events" class="mobile-nav-link py-2 text-parchment-100 hover:text-gold-300">Ceremonies</a>
+        <a href="#moments" class="mobile-nav-link py-2 text-parchment-100 hover:text-gold-300">Moments</a>
+        <a href="#wishes" class="mobile-nav-link py-2 text-parchment-100 hover:text-gold-300">Guestbook</a>
+        <a href="#venue" class="mobile-nav-link py-2 text-parchment-100 hover:text-gold-300">Venue &amp; Travel</a>
       </div>
     </header>
 
-    <!-- HERO SECTION -->
+    <!-- ============================================================== -->
+    <!-- HERO SECTION & LIVE COUNTDOWN                                  -->
+    <!-- ============================================================== -->
     <section id="hero" class="relative min-h-[92vh] flex flex-col items-center justify-center text-center px-4 py-20 bg-gradient-to-b from-ruby-950 via-crimson-950 to-ruby-950 overflow-hidden">
-      <div class="relative z-10 w-48 h-48 md:w-56 md:h-56 rounded-full border-4 border-gold-400/80 bg-gradient-to-b from-parchment-50 to-parchment-100 p-4 shadow-2xl flex items-center justify-center mb-8 mx-auto ring-8 ring-gold-500/20">
-        <svg viewBox="0 0 100 100" class="w-full h-full text-crimson-900">
-          <path d="M42 20 C34 38 23 60 18 76 C26 71 34 68 44 68 C46 56 47 42 48 30 C53 46 60 62 65 76 C71 71 78 68 86 68 C79 52 68 34 60 20 Z" fill="currentColor"/>
-          <path d="M53 26 C59 44 68 62 73 78 C76 86 75 92 68 95 C61 97 54 92 53 86" fill="none" stroke="currentColor" stroke-width="5.2" stroke-linecap="round"/>
+      
+      <!-- Center Royal Medallion with Circular AJ Calligraphy Monogram -->
+      <div class="relative z-10 w-52 h-52 md:w-64 md:h-64 rounded-full border-4 border-gold-400 bg-gradient-to-b from-[#FFFDF9] to-[#FAF4EB] p-3 shadow-[0_25px_60px_rgba(40,2,6,0.9)] flex items-center justify-center mb-8 mx-auto ring-8 ring-gold-500/20 overflow-hidden">
+        <svg viewBox="0 0 720 720" class="w-full h-full text-crimson-900 drop-shadow-md">
+          <use href="#aj-monogram" />
         </svg>
+        <img src="assets/monogram.png" alt="AJ Monogram" class="absolute inset-0 w-full h-full object-cover rounded-full opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.remove()">
       </div>
 
+      <!-- Sacred Invocation -->
       <p class="font-cinzel text-xs md:text-sm tracking-[0.35em] text-gold-300 uppercase mb-3">॥ श्री गणेशाय नमः ॥</p>
-      <h1 class="font-cormorant text-5xl sm:text-7xl md:text-8xl font-bold text-parchment-50 tracking-tight">
-        Ankit <span class="font-serif italic font-normal text-gold-400 text-4xl sm:text-6xl md:text-7xl">&amp;</span> Jyoti
+
+      <!-- Refined Couple Names with Graceful Curves -->
+      <h1 class="font-cormorant italic text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-normal text-white tracking-normal leading-tight">
+        Ankit <span class="gold-gradient-text font-cormorant italic font-normal text-5xl sm:text-6xl md:text-7xl lg:text-8xl">&amp;</span> Jyoti
       </h1>
-      <p class="font-serif italic text-lg md:text-2xl text-gold-200 mt-4 max-w-xl mx-auto">
-        Together with their families, invite you to share in the joy of their wedding celebration
+
+      <p class="font-lora italic text-lg md:text-2xl text-gold-200 mt-4 max-w-2xl mx-auto font-normal leading-relaxed">
+        Together with their families, joyfully invite you to celebrate their sacred union and holy matrimony.
       </p>
 
       <div class="h-0.5 w-32 bg-gradient-to-r from-transparent via-gold-400 to-transparent my-6 mx-auto"></div>
-      <p class="font-cinzel text-sm md:text-base tracking-[0.25em] text-parchment-100 font-semibold uppercase">December 2 – 4, 2026</p>
 
-      <!-- LIVE COUNTDOWN -->
+      <p class="font-cinzel text-sm md:text-base tracking-[0.25em] text-parchment-100 font-semibold uppercase">
+        December 2 – 4, 2026
+      </p>
+
+      <!-- LIVE COUNTDOWN TIMER (Calibrated to Dec 2, 2026 at 7:00 PM IST) -->
       <div class="mt-10 max-w-2xl w-full mx-auto grid grid-cols-4 gap-3 md:gap-6">
-        <div class="bg-crimson-900/80 border border-gold-500/40 rounded-xl p-3 md:p-5 backdrop-blur shadow-lg">
+        <div class="bg-crimson-900/80 border border-gold-500/40 rounded-2xl p-4 md:p-6 backdrop-blur shadow-lg">
           <span id="days" class="block font-cormorant text-3xl md:text-5xl font-bold text-gold-300">00</span>
-          <span class="text-[10px] md:text-xs font-cinzel tracking-widest text-parchment-200 uppercase">Days</span>
+          <span class="text-[10px] md:text-xs font-cinzel tracking-widest text-parchment-200 uppercase mt-1 block">Days</span>
         </div>
-        <div class="bg-crimson-900/80 border border-gold-500/40 rounded-xl p-3 md:p-5 backdrop-blur shadow-lg">
+        <div class="bg-crimson-900/80 border border-gold-500/40 rounded-2xl p-4 md:p-6 backdrop-blur shadow-lg">
           <span id="hours" class="block font-cormorant text-3xl md:text-5xl font-bold text-gold-300">00</span>
-          <span class="text-[10px] md:text-xs font-cinzel tracking-widest text-parchment-200 uppercase">Hours</span>
+          <span class="text-[10px] md:text-xs font-cinzel tracking-widest text-parchment-200 uppercase mt-1 block">Hours</span>
         </div>
-        <div class="bg-crimson-900/80 border border-gold-500/40 rounded-xl p-3 md:p-5 backdrop-blur shadow-lg">
+        <div class="bg-crimson-900/80 border border-gold-500/40 rounded-2xl p-4 md:p-6 backdrop-blur shadow-lg">
           <span id="minutes" class="block font-cormorant text-3xl md:text-5xl font-bold text-gold-300">00</span>
-          <span class="text-[10px] md:text-xs font-cinzel tracking-widest text-parchment-200 uppercase">Mins</span>
+          <span class="text-[10px] md:text-xs font-cinzel tracking-widest text-parchment-200 uppercase mt-1 block">Mins</span>
         </div>
-        <div class="bg-crimson-900/80 border border-gold-500/40 rounded-xl p-3 md:p-5 backdrop-blur shadow-lg">
+        <div class="bg-crimson-900/80 border border-gold-500/40 rounded-2xl p-4 md:p-6 backdrop-blur shadow-lg">
           <span id="seconds" class="block font-cormorant text-3xl md:text-5xl font-bold text-gold-300">00</span>
-          <span class="text-[10px] md:text-xs font-cinzel tracking-widest text-parchment-200 uppercase">Secs</span>
+          <span class="text-[10px] md:text-xs font-cinzel tracking-widest text-parchment-200 uppercase mt-1 block">Secs</span>
         </div>
       </div>
 
+      <!-- Quick Action Buttons -->
       <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-        <a href="#events" class="px-8 py-3 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-ruby-950 font-cinzel text-xs font-bold tracking-widest uppercase shadow-lg transition">View Ceremonies</a>
-        <a href="https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-8 py-3 rounded-full border border-gold-400/70 bg-crimson-950/60 text-gold-200 font-cinzel text-xs font-bold tracking-widest uppercase shadow-lg transition flex items-center gap-2">
+        <a href="#events" class="px-8 py-3 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-ruby-950 font-cinzel text-xs font-bold tracking-widest uppercase hover:brightness-110 shadow-lg transition">
+          View Ceremonies
+        </a>
+        <a href="https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-8 py-3 rounded-full border border-gold-400/70 bg-crimson-950/60 text-gold-200 font-cinzel text-xs font-bold tracking-widest uppercase hover:bg-crimson-900 shadow-lg transition flex items-center gap-2">
           <i class="fa-solid fa-location-dot text-gold-400"></i> Venue Map
         </a>
       </div>
+
     </section>
 
-    <!-- 4 CEREMONIES CAROUSEL -->
+    <!-- ============================================================== -->
+    <!-- 4 CEREMONIES CAROUSEL SLIDER                                   -->
+    <!-- ============================================================== -->
     <section id="events" class="py-24 px-4 bg-crimson-950/90 relative border-t border-gold-500/30">
       <div class="max-w-5xl mx-auto">
+        
         <div class="text-center mb-12">
-          <p class="font-cinzel text-xs tracking-[0.3em] text-gold-400 uppercase">Auspicious Schedule</p>
-          <h2 class="font-cormorant text-4xl md:text-6xl font-bold text-parchment-50 mt-1">Wedding Ceremonies</h2>
+          <p class="font-cinzel text-xs tracking-[0.3em] text-gold-400 uppercase">Program Details</p>
+          <h2 class="font-cinzel text-3xl md:text-5xl font-bold text-parchment-50 mt-1 uppercase tracking-wider">Celebration Itinerary</h2>
           <div class="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto mt-4"></div>
         </div>
 
+        <!-- Carousel Navigation Pills -->
         <div class="flex flex-wrap items-center justify-center gap-2 md:gap-3 mb-10 font-cinzel text-xs">
           <button class="carousel-pill px-4 py-2 rounded-full border border-gold-500/50 bg-gold-500 text-ruby-950 font-bold transition" data-slide="0">1. Mehndi</button>
-          <button class="carousel-pill px-4 py-2 rounded-full border border-gold-500/30 bg-crimson-900/60 text-gold-200 transition" data-slide="1">2. Haldi</button>
-          <button class="carousel-pill px-4 py-2 rounded-full border border-gold-500/30 bg-crimson-900/60 text-gold-200 transition" data-slide="2">3. Sangeet</button>
-          <button class="carousel-pill px-4 py-2 rounded-full border border-gold-500/30 bg-crimson-900/60 text-gold-200 transition" data-slide="3">4. Shadi</button>
+          <button class="carousel-pill px-4 py-2 rounded-full border border-gold-500/30 bg-crimson-900/60 text-gold-200 hover:bg-crimson-800 transition" data-slide="1">2. Haldi</button>
+          <button class="carousel-pill px-4 py-2 rounded-full border border-gold-500/30 bg-crimson-900/60 text-gold-200 hover:bg-crimson-800 transition" data-slide="2">3. Sangeet</button>
+          <button class="carousel-pill px-4 py-2 rounded-full border border-gold-500/30 bg-crimson-900/60 text-gold-200 hover:bg-crimson-800 transition" data-slide="3">4. Shadi</button>
         </div>
 
+        <!-- Carousel Container with Arrows -->
         <div class="relative overflow-hidden rounded-3xl border-2 border-gold-500/50 bg-gradient-to-b from-crimson-900 via-crimson-950 to-ruby-950 shadow-2xl p-6 md:p-12">
+          
+          <!-- Slide Track -->
           <div id="carousel-track" class="flex transition-transform duration-700 ease-out">
-            <!-- 1. Mehndi -->
+            
+            <!-- SLIDE 1: MEHNDI -->
             <div class="w-full flex-shrink-0 px-2 md:px-8 text-center flex flex-col items-center">
-              <span class="inline-block px-4 py-1 rounded-full bg-gold-500/20 text-gold-300 font-cinzel text-xs tracking-widest uppercase mb-4 border border-gold-500/30">Wednesday &bull; Dec 2, 2026</span>
-              <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-400 flex items-center justify-center text-gold-300 text-2xl mb-4"><i class="fa-solid fa-hand-sparkles"></i></div>
-              <h3 class="font-cormorant text-4xl md:text-5xl font-bold text-gold-200">Mehndi Ceremony</h3>
+              <span class="inline-block px-4 py-1 rounded-full bg-gold-500/20 text-gold-300 font-cinzel text-xs tracking-widest uppercase mb-4 border border-gold-500/30">
+                Wednesday &bull; Dec 2, 2026
+              </span>
+              <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-400 flex items-center justify-center text-gold-300 text-2xl mb-4">
+                <i class="fa-solid fa-hand-sparkles"></i>
+              </div>
+              <h3 class="font-cormorant italic text-4xl md:text-5xl font-semibold text-gold-200">Mehndi Ceremony</h3>
               <p class="font-cinzel text-sm text-gold-400 font-semibold tracking-wider mt-2">7:00 PM Onwards</p>
-              <p class="font-serif italic text-base md:text-lg text-parchment-200 max-w-xl mx-auto mt-4">An enchanting evening of henna artistry, fragrant marigolds, and celebration melodies.</p>
+              <p class="font-lora text-base md:text-lg text-parchment-200 max-w-xl mx-auto mt-4 leading-relaxed font-normal">
+                An enchanting evening of henna artistry, fragrant marigolds, folk music, and traditional songs as our hands are adorned with love and blessings.
+              </p>
+              
               <div class="mt-8 flex flex-wrap gap-4 justify-center">
-                <a href="https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-6 py-2.5 rounded-full border border-gold-400/60 bg-crimson-900/60 text-gold-200 font-cinzel text-xs font-bold uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-diamond-turn-right"></i> Venue Map</a>
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Mehndi+Ceremony+-+Ankit+%26+Jyoti&dates=20261202T133000Z/20261202T173000Z&details=Mehndi+celebration+for+Ankit+and+Jyoti&location=https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-6 py-2.5 rounded-full bg-gold-500 text-ruby-950 font-cinzel text-xs font-bold uppercase tracking-wider hover:brightness-110 shadow transition flex items-center gap-2">
+                  <i class="fa-regular fa-calendar-plus"></i> Add to Calendar
+                </a>
+                <a href="https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-6 py-2.5 rounded-full border border-gold-400/60 bg-crimson-900/60 text-gold-200 font-cinzel text-xs font-bold uppercase tracking-wider hover:bg-crimson-800 transition flex items-center gap-2">
+                  <i class="fa-solid fa-diamond-turn-right"></i> Venue Map &amp; Directions
+                </a>
               </div>
             </div>
-            <!-- 2. Haldi -->
+
+            <!-- SLIDE 2: HALDI -->
             <div class="w-full flex-shrink-0 px-2 md:px-8 text-center flex flex-col items-center">
-              <span class="inline-block px-4 py-1 rounded-full bg-gold-500/20 text-gold-300 font-cinzel text-xs tracking-widest uppercase mb-4 border border-gold-500/30">Thursday &bull; Dec 3, 2026</span>
-              <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-400 flex items-center justify-center text-gold-300 text-2xl mb-4"><i class="fa-solid fa-sun"></i></div>
-              <h3 class="font-cormorant text-4xl md:text-5xl font-bold text-gold-200">Haldi Ceremony</h3>
+              <span class="inline-block px-4 py-1 rounded-full bg-gold-500/20 text-gold-300 font-cinzel text-xs tracking-widest uppercase mb-4 border border-gold-500/30">
+                Thursday &bull; Dec 3, 2026
+              </span>
+              <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-400 flex items-center justify-center text-gold-300 text-2xl mb-4">
+                <i class="fa-solid fa-sun"></i>
+              </div>
+              <h3 class="font-cormorant italic text-4xl md:text-5xl font-semibold text-gold-200">Haldi Ceremony</h3>
               <p class="font-cinzel text-sm text-gold-400 font-semibold tracking-wider mt-2">11:00 AM Morning</p>
-              <p class="font-serif italic text-base md:text-lg text-parchment-200 max-w-xl mx-auto mt-4">A joyous splash of sunshine, sacred turmeric pastes, and blessing showers.</p>
+              <p class="font-lora text-base md:text-lg text-parchment-200 max-w-xl mx-auto mt-4 leading-relaxed font-normal">
+                A joyous splash of sunshine, sacred turmeric pastes, rose petals, and cheerful laughter preparing the bride and groom for their sacred vows.
+              </p>
+              
               <div class="mt-8 flex flex-wrap gap-4 justify-center">
-                <a href="https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-6 py-2.5 rounded-full border border-gold-400/60 bg-crimson-900/60 text-gold-200 font-cinzel text-xs font-bold uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-diamond-turn-right"></i> Venue Map</a>
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Haldi+Ceremony+-+Ankit+%26+Jyoti&dates=20261203T053000Z/20261203T083000Z&details=Haldi+celebration+for+Ankit+and+Jyoti&location=https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-6 py-2.5 rounded-full bg-gold-500 text-ruby-950 font-cinzel text-xs font-bold uppercase tracking-wider hover:brightness-110 shadow transition flex items-center gap-2">
+                  <i class="fa-regular fa-calendar-plus"></i> Add to Calendar
+                </a>
+                <a href="https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-6 py-2.5 rounded-full border border-gold-400/60 bg-crimson-900/60 text-gold-200 font-cinzel text-xs font-bold uppercase tracking-wider hover:bg-crimson-800 transition flex items-center gap-2">
+                  <i class="fa-solid fa-diamond-turn-right"></i> Venue Map &amp; Directions
+                </a>
               </div>
             </div>
-            <!-- 3. Sangeet -->
+
+            <!-- SLIDE 3: SANGEET -->
             <div class="w-full flex-shrink-0 px-2 md:px-8 text-center flex flex-col items-center">
-              <span class="inline-block px-4 py-1 rounded-full bg-gold-500/20 text-gold-300 font-cinzel text-xs tracking-widest uppercase mb-4 border border-gold-500/30">Thursday &bull; Dec 3, 2026</span>
-              <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-400 flex items-center justify-center text-gold-300 text-2xl mb-4"><i class="fa-solid fa-music"></i></div>
-              <h3 class="font-cormorant text-4xl md:text-5xl font-bold text-gold-200">Sangeet &amp; Musical Night</h3>
+              <span class="inline-block px-4 py-1 rounded-full bg-gold-500/20 text-gold-300 font-cinzel text-xs tracking-widest uppercase mb-4 border border-gold-500/30">
+                Thursday &bull; Dec 3, 2026
+              </span>
+              <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-400 flex items-center justify-center text-gold-300 text-2xl mb-4">
+                <i class="fa-solid fa-music"></i>
+              </div>
+              <h3 class="font-cormorant italic text-4xl md:text-5xl font-semibold text-gold-200">Sangeet &amp; Musical Night</h3>
               <p class="font-cinzel text-sm text-gold-400 font-semibold tracking-wider mt-2">7:00 PM Onwards</p>
-              <p class="font-serif italic text-base md:text-lg text-parchment-200 max-w-xl mx-auto mt-4">An electrifying night of rhythm, stellar dance performances, and celebration anthems.</p>
+              <p class="font-lora text-base md:text-lg text-parchment-200 max-w-xl mx-auto mt-4 leading-relaxed font-normal">
+                An electrifying night of rhythm, stellar dance performances, celebration anthems, and feasts that will have everyone on their feet.
+              </p>
+              
               <div class="mt-8 flex flex-wrap gap-4 justify-center">
-                <a href="https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-6 py-2.5 rounded-full border border-gold-400/60 bg-crimson-900/60 text-gold-200 font-cinzel text-xs font-bold uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-diamond-turn-right"></i> Venue Map</a>
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Sangeet+Night+-+Ankit+%26+Jyoti&dates=20261203T133000Z/20261203T183000Z&details=Sangeet+Night+celebration+for+Ankit+and+Jyoti&location=https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-6 py-2.5 rounded-full bg-gold-500 text-ruby-950 font-cinzel text-xs font-bold uppercase tracking-wider hover:brightness-110 shadow transition flex items-center gap-2">
+                  <i class="fa-regular fa-calendar-plus"></i> Add to Calendar
+                </a>
+                <a href="https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-6 py-2.5 rounded-full border border-gold-400/60 bg-crimson-900/60 text-gold-200 font-cinzel text-xs font-bold uppercase tracking-wider hover:bg-crimson-800 transition flex items-center gap-2">
+                  <i class="fa-solid fa-diamond-turn-right"></i> Venue Map &amp; Directions
+                </a>
               </div>
             </div>
-            <!-- 4. Shadi -->
+
+            <!-- SLIDE 4: SHADI -->
             <div class="w-full flex-shrink-0 px-2 md:px-8 text-center flex flex-col items-center">
-              <span class="inline-block px-4 py-1 rounded-full bg-gold-500/20 text-gold-300 font-cinzel text-xs tracking-widest uppercase mb-4 border border-gold-500/30">Friday &bull; Dec 4, 2026</span>
-              <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-400 flex items-center justify-center text-gold-300 text-2xl mb-4"><i class="fa-solid fa-ring"></i></div>
-              <h3 class="font-cormorant text-4xl md:text-5xl font-bold text-gold-200">Shadi &bull; Sacred Phere</h3>
-              <p class="font-cinzel text-sm text-gold-400 font-semibold tracking-wider mt-2">7:00 PM Sacred Pheras &bull; Dinner</p>
-              <p class="font-serif italic text-base md:text-lg text-parchment-200 max-w-xl mx-auto mt-4">The grand culmination around the holy Agni with seven sacred vows of companionship.</p>
+              <span class="inline-block px-4 py-1 rounded-full bg-gold-500/20 text-gold-300 font-cinzel text-xs tracking-widest uppercase mb-4 border border-gold-500/30">
+                Friday &bull; Dec 4, 2026
+              </span>
+              <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-400 flex items-center justify-center text-gold-300 text-2xl mb-4">
+                <i class="fa-solid fa-ring"></i>
+              </div>
+              <h3 class="font-cormorant italic text-4xl md:text-5xl font-semibold text-gold-200">Shadi &bull; Sacred Phere</h3>
+              <p class="font-cinzel text-sm text-gold-400 font-semibold tracking-wider mt-2">7:00 PM Sacred Pheras &bull; Banquet to Follow</p>
+              <p class="font-lora text-base md:text-lg text-parchment-200 max-w-xl mx-auto mt-4 leading-relaxed font-normal">
+                The grand culmination around the holy Agni. Seven sacred vows of eternal companionship, followed by the royal reception and celebratory banquet.
+              </p>
+              
               <div class="mt-8 flex flex-wrap gap-4 justify-center">
-                <a href="https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-6 py-2.5 rounded-full border border-gold-400/60 bg-crimson-900/60 text-gold-200 font-cinzel text-xs font-bold uppercase tracking-wider flex items-center gap-2"><i class="fa-solid fa-diamond-turn-right"></i> Venue Map</a>
+                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+Shadi+-+Ankit+%26+Jyoti&dates=20261204T133000Z/20261204T193000Z&details=Wedding+Ceremony+and+Reception+for+Ankit+and+Jyoti&location=https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-6 py-2.5 rounded-full bg-gold-500 text-ruby-950 font-cinzel text-xs font-bold uppercase tracking-wider hover:brightness-110 shadow transition flex items-center gap-2">
+                  <i class="fa-regular fa-calendar-plus"></i> Add to Calendar
+                </a>
+                <a href="https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="px-6 py-2.5 rounded-full border border-gold-400/60 bg-crimson-900/60 text-gold-200 font-cinzel text-xs font-bold uppercase tracking-wider hover:bg-crimson-800 transition flex items-center gap-2">
+                  <i class="fa-solid fa-diamond-turn-right"></i> Venue Map &amp; Directions
+                </a>
               </div>
             </div>
+
           </div>
 
-          <button id="carousel-prev" class="absolute top-1/2 left-3 md:left-5 -translate-y-1/2 w-11 h-11 rounded-full bg-crimson-900/90 border border-gold-400/60 text-gold-300 hover:bg-gold-500 hover:text-ruby-950 transition flex items-center justify-center shadow-lg"><i class="fa-solid fa-chevron-left"></i></button>
-          <button id="carousel-next" class="absolute top-1/2 right-3 md:right-5 -translate-y-1/2 w-11 h-11 rounded-full bg-crimson-900/90 border border-gold-400/60 text-gold-300 hover:bg-gold-500 hover:text-ruby-950 transition flex items-center justify-center shadow-lg"><i class="fa-solid fa-chevron-right"></i></button>
+          <!-- Carousel Controls: Left & Right Arrows -->
+          <button id="carousel-prev" class="absolute top-1/2 left-3 md:left-5 -translate-y-1/2 w-11 h-11 rounded-full bg-crimson-900/90 border border-gold-400/60 text-gold-300 hover:bg-gold-500 hover:text-ruby-950 transition flex items-center justify-center shadow-lg" aria-label="Previous Ceremony">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button id="carousel-next" class="absolute top-1/2 right-3 md:right-5 -translate-y-1/2 w-11 h-11 rounded-full bg-crimson-900/90 border border-gold-400/60 text-gold-300 hover:bg-gold-500 hover:text-ruby-950 transition flex items-center justify-center shadow-lg" aria-label="Next Ceremony">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+
         </div>
+
       </div>
     </section>
 
-    <!-- MOMENTS -->
+    <!-- ============================================================== -->
+    <!-- MOMENTS PHOTO GALLERY                                          -->
+    <!-- ============================================================== -->
     <section id="moments" class="py-24 px-4 bg-ruby-950 relative border-t border-gold-500/20">
       <div class="max-w-6xl mx-auto text-center">
         <p class="font-cinzel text-xs tracking-[0.3em] text-gold-400 uppercase">Cherished Frames</p>
-        <h2 class="font-cormorant text-4xl md:text-6xl font-bold text-parchment-50 mt-1">Moments of Love</h2>
+        <h2 class="font-cinzel text-3xl md:text-5xl font-bold text-parchment-50 mt-1 uppercase tracking-wider">Moments of Love</h2>
         <div class="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto mt-4 mb-14"></div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           <div class="relative group overflow-hidden rounded-2xl border border-gold-500/40 shadow-xl aspect-[4/5] bg-crimson-900/50">
             <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80" alt="Moment 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
             <div class="absolute inset-0 bg-gradient-to-t from-ruby-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition p-6 flex flex-col justify-end text-left">
-              <span class="font-cormorant text-2xl text-gold-200">The Beginning</span>
-              <span class="text-xs font-sans text-parchment-200">Two souls, one destiny</span>
+              <span class="font-cormorant italic text-2xl text-gold-200">The Beginning</span>
+              <span class="text-xs font-lora text-parchment-200">Two souls, one sacred path</span>
             </div>
           </div>
           <div class="relative group overflow-hidden rounded-2xl border border-gold-500/40 shadow-xl aspect-[4/5] bg-crimson-900/50">
             <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="Moment 2" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
             <div class="absolute inset-0 bg-gradient-to-t from-ruby-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition p-6 flex flex-col justify-end text-left">
-              <span class="font-cormorant text-2xl text-gold-200">Golden Sunset</span>
-              <span class="text-xs font-sans text-parchment-200">A promise for forever</span>
+              <span class="font-cormorant italic text-2xl text-gold-200">Golden Promises</span>
+              <span class="text-xs font-lora text-parchment-200">A promise for forever</span>
             </div>
           </div>
           <div class="relative group overflow-hidden rounded-2xl border border-gold-500/40 shadow-xl aspect-[4/5] bg-crimson-900/50">
             <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80" alt="Moment 3" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
             <div class="absolute inset-0 bg-gradient-to-t from-ruby-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition p-6 flex flex-col justify-end text-left">
-              <span class="font-cormorant text-2xl text-gold-200">Eternal Joy</span>
-              <span class="text-xs font-sans text-parchment-200">Surrounded by warmth</span>
+              <span class="font-cormorant italic text-2xl text-gold-200">Eternal Joy</span>
+              <span class="text-xs font-lora text-parchment-200">Surrounded by warmth &amp; laughter</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- GUESTBOOK (NO RSVP) -->
+    <!-- ============================================================== -->
+    <!-- DIGITAL GUESTBOOK / CELEBRATORY WISHES (NO RSVP)               -->
+    <!-- ============================================================== -->
     <section id="wishes" class="py-24 px-4 bg-crimson-950 relative border-t border-gold-500/30">
       <div class="max-w-4xl mx-auto text-center">
         <p class="font-cinzel text-xs tracking-[0.3em] text-gold-400 uppercase">Warmest Blessings</p>
-        <h2 class="font-cormorant text-4xl md:text-6xl font-bold text-parchment-50 mt-1">Digital Guestbook</h2>
+        <h2 class="font-cinzel text-3xl md:text-5xl font-bold text-parchment-50 mt-1 uppercase tracking-wider">Digital Guestbook</h2>
+        <p class="font-lora italic text-parchment-200 text-base md:text-xl mt-2 max-w-xl mx-auto font-normal">
+          Leave your heartfelt prayers and blessings for Ankit &amp; Jyoti as they embark on this eternal journey together.
+        </p>
         <div class="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto mt-4 mb-12"></div>
 
+        <!-- Form Card -->
         <div class="bg-gradient-to-br from-crimson-900/70 to-ruby-950/90 border border-gold-500/40 rounded-3xl p-6 md:p-10 shadow-2xl text-left backdrop-blur">
           <form id="wishes-form" class="space-y-5">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <label class="block font-cinzel text-xs tracking-wider text-gold-300 uppercase mb-2">Your Name</label>
-                <input type="text" id="guest-name" required placeholder="e.g. Ramesh &amp; Family" class="w-full px-4 py-3 rounded-xl bg-ruby-950/80 border border-gold-500/40 text-parchment-100 focus:border-gold-400 focus:outline-none transition">
+                <label class="block font-cinzel text-xs tracking-wider text-gold-300 uppercase mb-2">Your Name *</label>
+                <input type="text" id="guest-name" required placeholder="e.g. Rajesh &amp; Sunita Varma" class="w-full px-4 py-3 rounded-xl bg-ruby-950/80 border border-gold-500/40 text-parchment-100 placeholder-parchment-200/40 focus:border-gold-400 focus:outline-none transition text-sm">
               </div>
               <div>
                 <label class="block font-cinzel text-xs tracking-wider text-gold-300 uppercase mb-2">Relation / City</label>
-                <input type="text" id="guest-relation" placeholder="e.g. Friends from Bangalore" class="w-full px-4 py-3 rounded-xl bg-ruby-950/80 border border-gold-500/40 text-parchment-100 focus:border-gold-400 focus:outline-none transition">
+                <input type="text" id="guest-relation" placeholder="e.g. Friends • Mumbai" class="w-full px-4 py-3 rounded-xl bg-ruby-950/80 border border-gold-500/40 text-parchment-100 placeholder-parchment-200/40 focus:border-gold-400 focus:outline-none transition text-sm">
               </div>
             </div>
             <div>
-              <label class="block font-cinzel text-xs tracking-wider text-gold-300 uppercase mb-2">Your Blessings &amp; Message</label>
-              <textarea id="guest-message" required rows="3" placeholder="Wishing you a lifetime of joy and togetherness..." class="w-full px-4 py-3 rounded-xl bg-ruby-950/80 border border-gold-500/40 text-parchment-100 focus:border-gold-400 focus:outline-none transition"></textarea>
+              <label class="block font-cinzel text-xs tracking-wider text-gold-300 uppercase mb-2">Your Blessing or Message *</label>
+              <textarea id="guest-message" required rows="3" placeholder="Wishing you a lifetime of endless laughter, joy, and prosperity..." class="w-full px-4 py-3 rounded-xl bg-ruby-950/80 border border-gold-500/40 text-parchment-100 placeholder-parchment-200/40 focus:border-gold-400 focus:outline-none transition text-sm"></textarea>
             </div>
-            <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-600 text-ruby-950 font-cinzel text-xs font-bold tracking-widest uppercase shadow-lg transition">Post Your Blessings</button>
+            <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-600 text-ruby-950 font-cinzel text-xs font-bold tracking-widest uppercase hover:brightness-110 shadow-lg transition flex items-center justify-center gap-2">
+              <i class="fa-solid fa-feather-pointed"></i> Post Your Blessings
+            </button>
           </form>
 
+          <!-- Wishes Feed -->
           <div class="mt-10 pt-8 border-t border-gold-500/30">
-            <h4 class="font-cinzel text-xs tracking-widest uppercase text-gold-300 mb-4">Recent Wishes</h4>
+            <h4 class="font-cinzel text-xs tracking-widest uppercase text-gold-300 mb-4">Celebration Wishes</h4>
             <div id="wishes-feed" class="space-y-4 max-h-72 overflow-y-auto pr-2">
               <div class="bg-crimson-950/80 border border-gold-500/20 rounded-xl p-4">
                 <div class="flex justify-between items-center mb-1">
-                  <span class="font-cormorant text-lg font-bold text-gold-200">The Sharma Family</span>
-                  <span class="text-[10px] text-parchment-200/60">Bengaluru</span>
+                  <span class="font-cormorant italic text-xl font-bold text-gold-200">Sunita &amp; Rajesh Varma</span>
+                  <span class="text-[10px] font-cinzel text-parchment-200/60 uppercase">Mumbai</span>
                 </div>
-                <p class="font-serif italic text-sm text-parchment-100">May your bond grow stronger with each passing day. Heartiest congratulations to Ankit and Jyoti!</p>
+                <p class="font-lora italic text-sm text-parchment-100">May your bond grow stronger with each passing day. Heartiest congratulations to Ankit and Jyoti!</p>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     </section>
 
-    <!-- VENUE -->
+    <!-- ============================================================== -->
+    <!-- VENUE & NAVIGATION SECTION                                     -->
+    <!-- ============================================================== -->
     <section id="venue" class="py-24 px-4 bg-ruby-950 relative border-t border-gold-500/30">
       <div class="max-w-4xl mx-auto text-center">
         <p class="font-cinzel text-xs tracking-[0.3em] text-gold-400 uppercase">Destination</p>
-        <h2 class="font-cormorant text-4xl md:text-6xl font-bold text-parchment-50 mt-1">Venue &amp; Directions</h2>
+        <h2 class="font-cinzel text-3xl md:text-5xl font-bold text-parchment-50 mt-1 uppercase tracking-wider">Venue Location &amp; Directions</h2>
         <div class="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto mt-4 mb-10"></div>
 
         <div class="bg-gradient-to-b from-crimson-900/60 to-ruby-950/90 border-2 border-gold-500/40 rounded-3xl p-8 md:p-12 shadow-2xl backdrop-blur">
-          <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-400 flex items-center justify-center text-gold-300 text-2xl mx-auto mb-4"><i class="fa-solid fa-map-location-dot"></i></div>
-          <h3 class="font-cormorant text-3xl md:text-4xl font-bold text-gold-200">Celebration Grounds</h3>
-          <p class="font-serif italic text-lg text-parchment-100 max-w-lg mx-auto mt-2">All wedding events from December 2 to December 4 will be hosted at our celebration venue.</p>
+          <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-400 flex items-center justify-center text-gold-300 text-2xl mx-auto mb-4">
+            <i class="fa-solid fa-map-location-dot"></i>
+          </div>
+          <h3 class="font-cormorant italic text-3xl md:text-4xl font-semibold text-gold-200">Celebration Grounds</h3>
+          <p class="font-lora text-base md:text-lg text-parchment-100 max-w-lg mx-auto mt-2 font-normal">
+            All wedding events from December 2 to December 4 will be hosted at our celebration venue.
+          </p>
+
           <div class="mt-8">
-            <a href="https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-ruby-950 font-cinzel text-xs font-bold tracking-widest uppercase shadow-2xl transition">
+            <a href="https://share.google/dXV5JNoLoodDI7BVY" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-ruby-950 font-cinzel text-xs font-bold tracking-widest uppercase hover:brightness-110 shadow-2xl transition">
               <i class="fa-solid fa-diamond-turn-right text-base"></i> Open in Google Maps
             </a>
           </div>
@@ -419,22 +723,38 @@
       </div>
     </section>
 
+    <!-- ============================================================== -->
+    <!-- FOOTER                                                         -->
+    <!-- ============================================================== -->
     <footer class="py-16 px-4 bg-stone-950 border-t border-gold-500/30 text-center">
       <div class="max-w-4xl mx-auto">
-        <div class="w-16 h-16 rounded-full border-2 border-gold-400 bg-crimson-950 p-2 shadow-xl mx-auto mb-4 flex items-center justify-center">
-          <svg viewBox="0 0 100 100" class="w-full h-full text-gold-300">
-            <path d="M42 22 C34 38 24 58 20 72 C27 68 34 66 43 66 C45 56 46 44 47 34 C51 48 57 62 61 74 C66 69 72 66 79 66 C73 52 64 36 58 22 Z" fill="currentColor"/>
-            <path d="M52 28 C57 44 65 60 70 74 C73 82 72 88 66 91 C60 93 54 89 53 84" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+        
+        <!-- Footer Monogram Crest -->
+        <div class="relative w-16 h-16 rounded-full border-2 border-gold-400 bg-crimson-950 p-1 shadow-xl mx-auto mb-4 flex items-center justify-center overflow-hidden">
+          <svg viewBox="0 0 720 720" class="w-full h-full text-gold-300">
+            <use href="#aj-monogram" />
           </svg>
+          <img src="assets/monogram.png" alt="AJ Monogram" class="absolute inset-0 w-full h-full object-cover rounded-full opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.remove()">
         </div>
-        <h3 class="font-cormorant text-3xl font-bold text-gold-200">Ankit &amp; Jyoti</h3>
-        <p class="font-serif italic text-sm text-parchment-200/80 mt-1">December 2 – 4, 2026</p>
+
+        <h3 class="font-cormorant italic text-3xl md:text-4xl font-normal text-gold-200">Ankit &amp; Jyoti</h3>
+        <p class="font-cinzel text-xs text-parchment-200/80 uppercase tracking-widest mt-1">December 2 – 4, 2026</p>
+        
+        <p class="font-cinzel text-xs text-parchment-200/60 uppercase tracking-widest mt-6">
+          ॥ मांगलिक आशीर्वाद &bull; With Gratitude &amp; Love ॥
+        </p>
       </div>
     </footer>
+
   </div>
 
+  <!-- ============================================================== -->
+  <!-- JAVASCRIPT: TRI-FOLD UNVEILING, AUDIO SYNTH, CAROUSEL, TIMER   -->
+  <!-- ============================================================== -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      
+      // 1. TRI-FOLD UNVEILING ANIMATION SEQUENCE
       const unveilOverlay = document.getElementById('unveil-overlay');
       const envelopeWrapper = document.getElementById('envelope-wrapper');
       const envelopeBox = document.getElementById('envelope-box');
@@ -444,82 +764,74 @@
       const panelBottom = document.getElementById('panel-bottom');
       const mainWebsite = document.getElementById('main-website-root');
       const skipBtn = document.getElementById('skip-intro-btn');
-      const audioElement = document.getElementById('navrai-audio-element');
-      const audioToggleBtn = document.getElementById('audio-toggle-btn');
-      const audioStatusText = document.getElementById('audio-status-text');
 
       let hasOpened = false;
-
-      function playMusic() {
-        if (!audioElement) return;
-        audioElement.play().catch(() => {
-          document.addEventListener('click', () => audioElement.play().catch(() => {}), { once: true });
-        });
-      }
 
       function openInvitation() {
         if (hasOpened) return;
         hasOpened = true;
 
-        playMusic();
+        playNavraiMajhi();
 
+        // Step 1: Open Envelope Flap in 3D
         envelopeFlap.style.transform = 'rotateX(180deg)';
 
         setTimeout(() => {
+          // Step 2: Fade Envelope Box, Reveal Tri-Fold Letter
           envelopeBox.style.opacity = '0';
           envelopeBox.style.transform = 'scale(0.85)';
+          
           trifoldContainer.style.opacity = '1';
           trifoldContainer.style.pointerEvents = 'auto';
 
-          setTimeout(() => { panelTop.classList.add('unfolded-top'); }, 350);
-          setTimeout(() => { panelBottom.classList.add('unfolded-bottom'); }, 850);
+          // Step 3: Unfold Top Flap UPWARDS
+          setTimeout(() => {
+            panelTop.classList.add('unfolded-top');
+          }, 350);
 
+          // Step 4: Unfold Bottom Flap DOWNWARDS
+          setTimeout(() => {
+            panelBottom.classList.add('unfolded-bottom');
+          }, 850);
+
+          // Step 5: Transition to Main Website
           setTimeout(() => {
             unveilOverlay.style.transition = 'opacity 1.2s ease, transform 1.2s ease';
             unveilOverlay.style.opacity = '0';
             unveilOverlay.style.transform = 'scale(1.1)';
+            
             mainWebsite.style.opacity = '1';
+            triggerCelebration();
 
-            setTimeout(() => { unveilOverlay.style.display = 'none'; }, 1200);
+            setTimeout(() => {
+              unveilOverlay.style.display = 'none';
+            }, 1200);
+
           }, 2400);
+
         }, 500);
       }
 
-      if (envelopeWrapper) envelopeWrapper.addEventListener('click', openInvitation);
-      if (skipBtn) skipBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        playMusic();
-        unveilOverlay.style.display = 'none';
-        mainWebsite.style.opacity = '1';
-      });
+      if (envelopeWrapper) {
+        envelopeWrapper.addEventListener('click', openInvitation);
+      }
 
-      // Audio Toggle
-      let isAudioPlaying = false;
-      if (audioToggleBtn && audioElement) {
-        audioElement.addEventListener('play', () => {
-          isAudioPlaying = true;
-          audioStatusText.innerText = "Playing: Navrai Majhi";
-        });
-        audioElement.addEventListener('pause', () => {
-          isAudioPlaying = false;
-          audioStatusText.innerText = "Paused (Click)";
-        });
-
-        audioToggleBtn.addEventListener('click', () => {
-          if (isAudioPlaying) {
-            audioElement.pause();
-          } else {
-            audioElement.play().catch(() => {});
-          }
+      if (skipBtn) {
+        skipBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          playNavraiMajhi();
+          unveilOverlay.style.display = 'none';
+          mainWebsite.style.opacity = '1';
         });
       }
 
-      // Background Canvas Gold Particles
+      // 2. AMBIENT BACKGROUND PARTICLES (GOLD DUST)
       const canvas = document.getElementById('ambient-gold-canvas');
       if (canvas) {
         const ctx = canvas.getContext('2d');
         let width = canvas.width = window.innerWidth;
         let height = canvas.height = window.innerHeight;
+
         const particles = Array.from({ length: 45 }, () => ({
           x: Math.random() * width,
           y: Math.random() * height,
@@ -528,6 +840,7 @@
           dy: -Math.random() * 0.6 - 0.2,
           opacity: Math.random() * 0.7 + 0.3
         }));
+
         function drawParticles() {
           ctx.clearRect(0, 0, width, height);
           particles.forEach(p => {
@@ -535,8 +848,10 @@
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
             ctx.fill();
+
             p.x += p.dx;
             p.y += p.dy;
+
             if (p.y < 0) p.y = height;
             if (p.x < 0) p.x = width;
             if (p.x > width) p.x = 0;
@@ -544,13 +859,66 @@
           requestAnimationFrame(drawParticles);
         }
         drawParticles();
+
         window.addEventListener('resize', () => {
           width = canvas.width = window.innerWidth;
           height = canvas.height = window.innerHeight;
         });
       }
 
-      // 4-Ceremony Carousel Controller
+      // 3. AUDIO CONTROLLER: NAVRAI MAJHI (MP3 PLAYBACK & TOGGLE)
+      const audioElement = document.getElementById('navrai-audio-element');
+      const audioBtn = document.getElementById('audio-toggle-btn');
+      const audioIcon = document.getElementById('audio-icon');
+      const musicBars = document.querySelector('.music-bars');
+      let isPlaying = false;
+
+      function playNavraiMajhi() {
+        if (!audioElement) return;
+        audioElement.volume = 0.85;
+        const playPromise = audioElement.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            isPlaying = true;
+            updateAudioUI(true);
+          }).catch(err => {
+            console.log("Audio waiting for user gesture:", err);
+          });
+        }
+      }
+
+      function pauseNavraiMajhi() {
+        if (!audioElement) return;
+        audioElement.pause();
+        isPlaying = false;
+        updateAudioUI(false);
+      }
+
+      function toggleNavraiMajhi() {
+        if (isPlaying) {
+          pauseNavraiMajhi();
+        } else {
+          playNavraiMajhi();
+        }
+      }
+
+      function updateAudioUI(playing) {
+        if (audioIcon) {
+          audioIcon.className = playing ? 'fa-solid fa-volume-high text-xs text-gold-300' : 'fa-solid fa-volume-xmark text-xs text-stone-400';
+        }
+        if (musicBars) {
+          musicBars.style.opacity = playing ? '1' : '0.4';
+          musicBars.querySelectorAll('span').forEach(bar => {
+            bar.style.animationPlayState = playing ? 'running' : 'paused';
+          });
+        }
+      }
+
+      if (audioBtn) {
+        audioBtn.addEventListener('click', toggleNavraiMajhi);
+      }
+
+      // 4. CAROUSEL SLIDER CONTROLLER (4 CEREMONIES)
       const track = document.getElementById('carousel-track');
       const prevBtn = document.getElementById('carousel-prev');
       const nextBtn = document.getElementById('carousel-next');
@@ -560,42 +928,61 @@
 
       function updateSlide(index) {
         currentSlide = (index + totalSlides) % totalSlides;
-        if (track) track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        if (track) {
+          track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
         pills.forEach((p, idx) => {
-          p.className = idx === currentSlide 
-            ? 'carousel-pill px-4 py-2 rounded-full border border-gold-500/50 bg-gold-500 text-ruby-950 font-bold transition'
-            : 'carousel-pill px-4 py-2 rounded-full border border-gold-500/30 bg-crimson-900/60 text-gold-200 transition';
+          if (idx === currentSlide) {
+            p.className = 'carousel-pill px-4 py-2 rounded-full border border-gold-500/50 bg-gold-500 text-ruby-950 font-bold transition';
+          } else {
+            p.className = 'carousel-pill px-4 py-2 rounded-full border border-gold-500/30 bg-crimson-900/60 text-gold-200 hover:bg-crimson-800 transition';
+          }
         });
       }
 
       if (nextBtn) nextBtn.addEventListener('click', () => updateSlide(currentSlide + 1));
       if (prevBtn) prevBtn.addEventListener('click', () => updateSlide(currentSlide - 1));
-      pills.forEach((pill, idx) => pill.addEventListener('click', () => updateSlide(idx)));
+
+      pills.forEach((pill, idx) => {
+        pill.addEventListener('click', () => updateSlide(idx));
+      });
 
       window.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') updateSlide(currentSlide + 1);
         if (e.key === 'ArrowLeft') updateSlide(currentSlide - 1);
       });
 
-      // Countdown to Dec 2, 2026, 7:00 PM IST
+      // 5. LIVE COUNTDOWN ENGINE (DECEMBER 2, 2026 AT 7:00 PM IST)
       const weddingDate = new Date('2026-12-02T19:00:00+05:30').getTime();
+
       function updateCountdown() {
         const now = new Date().getTime();
         const diff = weddingDate - now;
+
         if (diff > 0) {
-          document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
-          document.getElementById('hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-          document.getElementById('minutes').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-          document.getElementById('seconds').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+          const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+          document.getElementById('days').innerText = String(d).padStart(2, '0');
+          document.getElementById('hours').innerText = String(h).padStart(2, '0');
+          document.getElementById('minutes').innerText = String(m).padStart(2, '0');
+          document.getElementById('seconds').innerText = String(s).padStart(2, '0');
         }
       }
       setInterval(updateCountdown, 1000);
       updateCountdown();
 
-      // Guestbook with LocalStorage
+      // 6. GUESTBOOK FORM & LOCAL STORAGE PERSISTENCE
       const wishesForm = document.getElementById('wishes-form');
       const wishesFeed = document.getElementById('wishes-feed');
-      const savedWishes = JSON.parse(localStorage.getItem('wedding_wishes_aj') || '[]');
+
+      const defaultWishes = [
+        { name: "Sunita & Rajesh Varma", relation: "Mumbai", message: "May your bond grow stronger with each passing day. Heartiest congratulations to Ankit and Jyoti!" }
+      ];
+
+      const savedWishes = JSON.parse(localStorage.getItem('wedding_wishes_aj') || JSON.stringify(defaultWishes));
       savedWishes.forEach(item => addWishToFeed(item.name, item.relation, item.message));
 
       if (wishesForm) {
@@ -604,11 +991,13 @@
           const name = document.getElementById('guest-name').value.trim();
           const relation = document.getElementById('guest-relation').value.trim() || 'Well-wisher';
           const message = document.getElementById('guest-message').value.trim();
+
           if (name && message) {
             addWishToFeed(name, relation, message);
             savedWishes.unshift({ name, relation, message });
             localStorage.setItem('wedding_wishes_aj', JSON.stringify(savedWishes));
             wishesForm.reset();
+            triggerCelebration();
           }
         });
       }
@@ -616,8 +1005,14 @@
       function addWishToFeed(name, relation, message) {
         if (!wishesFeed) return;
         const card = document.createElement('div');
-        card.className = 'bg-crimson-950/80 border border-gold-500/20 rounded-xl p-4';
-        card.innerHTML = `<div class="flex justify-between items-center mb-1"><span class="font-cormorant text-lg font-bold text-gold-200">${escapeHtml(name)}</span><span class="text-[10px] text-parchment-200/60">${escapeHtml(relation)}</span></div><p class="font-serif italic text-sm text-parchment-100">${escapeHtml(message)}</p>`;
+        card.className = 'bg-crimson-950/80 border border-gold-500/20 rounded-xl p-4 transition hover:border-gold-400';
+        card.innerHTML = `
+          <div class="flex justify-between items-center mb-1">
+            <span class="font-cormorant italic text-xl font-bold text-gold-200">${escapeHtml(name)}</span>
+            <span class="text-[10px] font-cinzel text-parchment-200/60 uppercase">${escapeHtml(relation)}</span>
+          </div>
+          <p class="font-lora text-sm text-parchment-100 font-normal">"${escapeHtml(message)}"</p>
+        `;
         wishesFeed.prepend(card);
       }
 
@@ -627,15 +1022,74 @@
         }[tag] || tag));
       }
 
-      // Mobile Menu
+      // Confetti burst for celebrations
+      function triggerCelebration() {
+        const confettiCanvas = document.createElement('canvas');
+        confettiCanvas.style.position = 'fixed';
+        confettiCanvas.style.inset = '0';
+        confettiCanvas.style.width = '100vw';
+        confettiCanvas.style.height = '100vh';
+        confettiCanvas.style.pointerEvents = 'none';
+        confettiCanvas.style.zIndex = '9999';
+        document.body.appendChild(confettiCanvas);
+
+        const cctx = confettiCanvas.getContext('2d');
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+
+        const particles = Array.from({ length: 90 }, () => ({
+          x: confettiCanvas.width / 2,
+          y: confettiCanvas.height * 0.45,
+          vx: (Math.random() - 0.5) * 16,
+          vy: (Math.random() - 0.7) * 15,
+          size: Math.random() * 7 + 4,
+          color: ['#D4AF37', '#FAF1D6', '#8B0E1B', '#7A0C18', '#E8CE87'][Math.floor(Math.random() * 5)],
+          rot: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 8,
+          opacity: 1
+        }));
+
+        let frame = 0;
+        function animateConfetti() {
+          cctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+          particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.25;
+            p.rot += p.rotSpeed;
+            p.opacity -= 0.009;
+
+            cctx.save();
+            cctx.translate(p.x, p.y);
+            cctx.rotate((p.rot * Math.PI) / 180);
+            cctx.fillStyle = p.color;
+            cctx.globalAlpha = Math.max(0, p.opacity);
+            cctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 1.4);
+            cctx.restore();
+          });
+
+          if (++frame < 120) {
+            requestAnimationFrame(animateConfetti);
+          } else {
+            confettiCanvas.remove();
+          }
+        }
+        animateConfetti();
+      }
+
+      // 7. MOBILE DRAWER NAVIGATION
       const mobileBtn = document.getElementById('mobile-menu-btn');
       const mobileDrawer = document.getElementById('mobile-nav-drawer');
+
       if (mobileBtn && mobileDrawer) {
-        mobileBtn.addEventListener('click', () => mobileDrawer.classList.toggle('hidden'));
+        mobileBtn.addEventListener('click', () => {
+          mobileDrawer.classList.toggle('hidden');
+        });
         document.querySelectorAll('.mobile-nav-link').forEach(link => {
           link.addEventListener('click', () => mobileDrawer.classList.add('hidden'));
         });
       }
+
     });
   </script>
 </body>
