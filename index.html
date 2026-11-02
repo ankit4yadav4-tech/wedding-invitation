@@ -49,10 +49,7 @@
           fontFamily: {
             cormorant: ['"Cormorant Garamond"', 'serif'],
             cinzel: ['"Cinzel"', 'serif'],
-            lora: ['"Lora"', 'serif'],
-            playfair: ['"Cormorant Garamond"', 'serif'],
-            marcellus: ['"Cinzel"', 'serif'],
-            sans: ['"Lora"', 'serif'],
+            lora: ['"Lora"', 'serif']
           }
         }
       }
@@ -140,6 +137,26 @@
       animation: seal-pulse 2.2s infinite ease-in-out;
     }
 
+    /* Hand Gesture Scroll / Swipe Keyframe */
+    @keyframes hand-scroll {
+      0% { transform: translateY(-18px); opacity: 0.15; }
+      20% { opacity: 1; }
+      75% { opacity: 1; }
+      100% { transform: translateY(24px); opacity: 0; }
+    }
+    .animate-hand-scroll {
+      animation: hand-scroll 1.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    /* Floating Scroll Overlay Keyframe */
+    @keyframes float-subtle {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, -8px); }
+    }
+    .animate-float-banner {
+      animation: float-subtle 3s ease-in-out infinite;
+    }
+
     /* Radiant Liquid Gold Text */
     .gold-gradient-text {
       background: linear-gradient(135deg, #FFF8E1 0%, #F5E4B3 30%, #D4AF37 70%, #9F761A 100%);
@@ -202,9 +219,9 @@
     <!-- Background Gold Particles Canvas -->
     <canvas id="ambient-gold-canvas" class="absolute inset-0 pointer-events-none opacity-40"></canvas>
 
-    <!-- Skip Intro Button -->
-    <button id="skip-intro-btn" class="absolute top-6 right-6 z-50 text-gold-300/90 hover:text-white text-xs tracking-widest font-cinzel uppercase px-4 py-2 border border-gold-500/40 rounded-full bg-crimson-950/80 backdrop-blur shadow-lg transition">
-      Skip Intro <i class="fa-solid fa-angles-right ml-1"></i>
+    <!-- Prominent Skip Intro Button -->
+    <button id="skip-intro-btn" class="absolute top-6 right-6 z-50 text-gold-200 hover:text-white text-xs md:text-sm tracking-widest font-cinzel uppercase px-5 py-2.5 border-2 border-gold-400/80 rounded-full bg-crimson-950/90 hover:bg-crimson-900 backdrop-blur shadow-[0_0_20px_rgba(212,175,55,0.4)] transition">
+      Skip Intro <i class="fa-solid fa-angles-right ml-1 text-gold-300"></i>
     </button>
 
     <!-- RED ENVELOPE CONTAINER -->
@@ -232,17 +249,15 @@
         <div id="ganesha-seal-btn" class="relative z-10 flex flex-col items-center group my-auto">
           <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-gold-200 via-gold-400 to-gold-600 p-1 shadow-2xl pulse-seal flex items-center justify-center border border-gold-100">
             <div class="relative w-full h-full rounded-full bg-crimson-950 flex items-center justify-center p-3.5 border border-gold-400/70 overflow-hidden">
-              <!-- SVG Ganesha Fallback (Always crisp and visible by default) -->
               <svg viewBox="0 0 100 100" class="w-full h-full text-gold-300 filter drop-shadow">
                 <use href="#ganesha-symbol" />
               </svg>
-              <!-- Primary Asset with graceful chain: assets/ganesha.png -> assets/ganesha_idol.png -> SVG fallback -->
               <img src="assets/ganesha.png" alt="Shree Ganesha" class="absolute inset-0 w-full h-full object-contain p-2 rounded-full opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.onerror=null; this.src='assets/ganesha_idol.png'; this.onerror=function(){this.remove();}">
             </div>
           </div>
 
           <span class="mt-3 font-cinzel text-xs md:text-sm text-gold-300 tracking-widest uppercase font-semibold flex items-center gap-2 group-hover:text-gold-200 transition">
-            <i class="fa-solid fa-envelope-open text-xs"></i> Click to Open Invitation
+            <i class="fa-solid fa-envelope-open text-xs"></i> Click Seal to Open
           </span>
         </div>
 
@@ -255,7 +270,7 @@
       </div>
 
       <!-- ============================================================== -->
-      <!-- 2. THE 3-PART TRI-FOLD LETTER (UNFOLDS UP AND DOWN)           -->
+      <!-- THE 3-PART TRI-FOLD LETTER (UNFOLDS UP AND DOWN)               -->
       <!-- ============================================================== -->
       <div id="trifold-letter-container" class="absolute inset-0 pointer-events-none opacity-0 preserve-3d transition-all duration-700 flex flex-col justify-center items-center">
         
@@ -286,7 +301,7 @@
             </div>
           </div>
 
-          <!-- PANEL 2: MIDDLE PANEL (Anchor base of the folded letter) -->
+          <!-- PANEL 2: MIDDLE PANEL (Anchor base) -->
           <div id="panel-middle" class="relative w-full h-[220px] md:h-[240px] bg-[#F7EED9] text-stone-900 p-5 border-x-4 border-gold-500 shadow-inner flex flex-col items-center justify-center text-center overflow-hidden z-20">
             <div class="fold-crease-shadow"></div>
 
@@ -298,7 +313,6 @@
               <img src="assets/monogram.png" alt="AJ Monogram" class="absolute inset-0 w-full h-full object-cover rounded-full opacity-0 transition-opacity duration-300" onload="this.classList.remove('opacity-0')" onerror="this.remove()">
             </div>
 
-            <!-- Refined Elegant Names in Cormorant Garamond -->
             <h1 class="font-cormorant italic text-3xl md:text-5xl font-normal text-crimson-900 tracking-wide">
               Ankit <span class="font-cormorant italic text-gold-600 text-2xl md:text-4xl">&amp;</span> Jyoti
             </h1>
@@ -343,6 +357,48 @@
   </div>
 
   <!-- ============================================================== -->
+  <!-- SCROLL GUIDANCE OVERLAY (MINIMAL TRANSLUCENT BLACK WITH HAND)   -->
+  <!-- ============================================================== -->
+  <div id="scroll-guidance-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 select-none cursor-pointer p-6">
+    <div class="flex flex-col items-center justify-center text-center pointer-events-none">
+      
+      <!-- Animated Hand Gesture Container -->
+      <div class="relative w-20 h-28 flex items-center justify-center mb-5">
+        <!-- Subtle vertical track guide -->
+        <div class="w-1 h-20 bg-gradient-to-b from-gold-400/10 via-gold-400/40 to-transparent rounded-full"></div>
+        
+        <!-- Animated Hand SVG pointing & scrolling down -->
+        <div class="absolute animate-hand-scroll text-gold-300 filter drop-shadow-[0_0_12px_rgba(212,175,55,0.7)]">
+          <svg class="w-14 h-14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Pointing / scrolling hand gesture -->
+            <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v3"/>
+            <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v7"/>
+            <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/>
+            <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Text Instructions -->
+      <h3 class="font-cinzel text-lg md:text-xl font-bold tracking-[0.25em] text-gold-200 uppercase drop-shadow">
+        Scroll to Explore
+      </h3>
+      <p class="font-lora italic text-sm md:text-base text-parchment-200/80 mt-2 max-w-xs leading-relaxed">
+        Swipe or scroll down to begin the celebration
+      </p>
+
+      <!-- Downward Indicator Chevron -->
+      <div class="mt-4 flex flex-col items-center text-gold-400/90 animate-bounce">
+        <i class="fa-solid fa-chevron-down text-base"></i>
+      </div>
+
+      <span class="mt-6 text-[11px] font-cinzel text-parchment-200/50 uppercase tracking-widest">
+        (Tap anywhere or scroll)
+      </span>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
   <!-- 2. MAIN CELEBRATION WEBSITE ROOT                               -->
   <!-- ============================================================== -->
   <div id="main-website-root" class="relative opacity-0 transition-opacity duration-1000">
@@ -371,7 +427,7 @@
           </div>
         </a>
 
-        <!-- Desktop Navigation Links -->
+        <!-- Desktop Navigation Links (No Guestbook) -->
         <nav class="hidden md:flex items-center gap-8 font-cinzel text-xs tracking-widest text-parchment-100 font-semibold">
           <a href="#events" class="hover:text-gold-300 transition uppercase">Ceremonies</a>
           <a href="#moments" class="hover:text-gold-300 transition uppercase">Moments</a>
@@ -422,7 +478,7 @@
       <!-- Sacred Invocation -->
       <p class="font-cinzel text-xs md:text-sm tracking-[0.35em] text-gold-300 uppercase mb-3">॥ श्री गणेशाय नमः ॥</p>
 
-      <!-- Refined Couple Names with Graceful Curves -->
+      <!-- Couple Names in Cormorant Garamond -->
       <h1 class="font-cormorant italic text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-normal text-white tracking-normal leading-tight">
         Ankit <span class="gold-gradient-text font-cormorant italic font-normal text-5xl sm:text-6xl md:text-7xl lg:text-8xl">&amp;</span> Jyoti
       </h1>
@@ -481,7 +537,7 @@
           <div class="h-0.5 w-24 bg-gradient-to-r from-transparent via-gold-400 to-transparent mx-auto mt-4"></div>
         </div>
 
-        <!-- Carousel Navigation Pills (Color-coded to each ceremony) -->
+        <!-- Carousel Navigation Pills -->
         <div class="flex flex-wrap items-center justify-center gap-2 md:gap-3 mb-10 font-cinzel text-xs">
           <button class="carousel-pill px-4 py-2 rounded-full border transition font-bold" data-slide="0">
             <i class="fa-solid fa-leaf mr-1 text-emerald-400"></i> 1. Mehndi
@@ -710,22 +766,20 @@
           
           <!-- FRAME 1: Sparks & Splendor (DSC_4819.jpg) -->
           <div class="group relative overflow-hidden rounded-2xl border-2 border-gold-500/50 bg-[#1e0205] p-2 shadow-2xl hover:border-gold-400 transition-all duration-500 cursor-pointer moment-card"
-               data-img="assets/DSC_4819.JPG"
+               data-img="assets/DSC_4819.jpg"
                data-title="Sparks &amp; Splendor"
                data-subtitle="Walking hand-in-hand along the floral aisle amidst radiant spark fountains.">
             <div class="relative overflow-hidden rounded-xl aspect-[3/4] bg-stone-900">
-              <img src="assets/DSC_4819.JPG" 
+              <img src="assets/DSC_4819.jpg" 
                    alt="Ankit &amp; Jyoti - Sparks &amp; Splendor" 
                    class="w-full h-full object-cover object-center group-hover:scale-105 group-hover:rotate-0.5 transition duration-700 ease-out"
-                   onerror="this.onerror=null; this.src='DSC_4819.JPG';">
+                   onerror="this.onerror=null; this.src='DSC_4819.jpg';">
               <div class="absolute inset-0 bg-gradient-to-t from-ruby-950/95 via-ruby-950/25 to-transparent opacity-90 group-hover:opacity-100 transition duration-300"></div>
               
-              <!-- Subtle Zoom Icon Badge -->
               <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-crimson-950/80 border border-gold-400/60 text-gold-300 flex items-center justify-center opacity-0 group-hover:opacity-100 transition shadow">
                 <i class="fa-solid fa-expand text-xs"></i>
               </div>
 
-              <!-- Card Content -->
               <div class="absolute bottom-0 inset-x-0 p-5 z-10">
                 <span class="text-[10px] font-cinzel tracking-[0.25em] text-gold-400 uppercase block mb-1">Celebration Walk</span>
                 <h3 class="font-cormorant italic text-2xl md:text-3xl text-gold-200 font-semibold leading-tight">Sparks &amp; Splendor</h3>
@@ -738,22 +792,20 @@
 
           <!-- FRAME 2: Palace Whispers (SV_04385.jpg) -->
           <div class="group relative overflow-hidden rounded-2xl border-2 border-gold-500/50 bg-[#1e0205] p-2 shadow-2xl hover:border-gold-400 transition-all duration-500 cursor-pointer moment-card"
-               data-img="assets/SV_04385.JPG"
+               data-img="assets/SV_04385.jpg"
                data-title="Palace Whispers"
                data-subtitle="Joyful laughter and shared smiles seated upon the majestic palace steps.">
             <div class="relative overflow-hidden rounded-xl aspect-[3/4] bg-stone-900">
-              <img src="assets/SV_04385.JPG" 
+              <img src="assets/SV_04385.jpg" 
                    alt="Ankit &amp; Jyoti - Palace Whispers" 
                    class="w-full h-full object-cover object-center group-hover:scale-105 group-hover:rotate-0.5 transition duration-700 ease-out"
-                   onerror="this.onerror=null; this.src='SV_04385.JPG';">
+                   onerror="this.onerror=null; this.src='SV_04385.jpg';">
               <div class="absolute inset-0 bg-gradient-to-t from-ruby-950/95 via-ruby-950/25 to-transparent opacity-90 group-hover:opacity-100 transition duration-300"></div>
               
-              <!-- Subtle Zoom Icon Badge -->
               <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-crimson-950/80 border border-gold-400/60 text-gold-300 flex items-center justify-center opacity-0 group-hover:opacity-100 transition shadow">
                 <i class="fa-solid fa-expand text-xs"></i>
               </div>
 
-              <!-- Card Content -->
               <div class="absolute bottom-0 inset-x-0 p-5 z-10">
                 <span class="text-[10px] font-cinzel tracking-[0.25em] text-gold-400 uppercase block mb-1">Palace Steps</span>
                 <h3 class="font-cormorant italic text-2xl md:text-3xl text-gold-200 font-semibold leading-tight">Palace Whispers</h3>
@@ -766,22 +818,20 @@
 
           <!-- FRAME 3: Golden Hour Embrace (SV_04333.jpg) -->
           <div class="group relative overflow-hidden rounded-2xl border-2 border-gold-500/50 bg-[#1e0205] p-2 shadow-2xl hover:border-gold-400 transition-all duration-500 cursor-pointer moment-card"
-               data-img="assets/SV_04333.JPG"
+               data-img="assets/SV_04333.jpg"
                data-title="Golden Hour Embrace"
                data-subtitle="An intimate silhouette framed between classical sandstone pillars at dusk.">
             <div class="relative overflow-hidden rounded-xl aspect-[3/4] bg-stone-900">
-              <img src="assets/SV_04333.JPG" 
+              <img src="assets/SV_04333.jpg" 
                    alt="Ankit &amp; Jyoti - Golden Hour Embrace" 
                    class="w-full h-full object-cover object-center group-hover:scale-105 group-hover:rotate-0.5 transition duration-700 ease-out"
-                   onerror="this.onerror=null; this.src='SV_04333.JPG';">
+                   onerror="this.onerror=null; this.src='SV_04333.jpg';">
               <div class="absolute inset-0 bg-gradient-to-t from-ruby-950/95 via-ruby-950/25 to-transparent opacity-90 group-hover:opacity-100 transition duration-300"></div>
               
-              <!-- Subtle Zoom Icon Badge -->
               <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-crimson-950/80 border border-gold-400/60 text-gold-300 flex items-center justify-center opacity-0 group-hover:opacity-100 transition shadow">
                 <i class="fa-solid fa-expand text-xs"></i>
               </div>
 
-              <!-- Card Content -->
               <div class="absolute bottom-0 inset-x-0 p-5 z-10">
                 <span class="text-[10px] font-cinzel tracking-[0.25em] text-gold-400 uppercase block mb-1">Golden Hour</span>
                 <h3 class="font-cormorant italic text-2xl md:text-3xl text-gold-200 font-semibold leading-tight">Golden Hour Embrace</h3>
@@ -846,7 +896,6 @@
     <footer class="py-16 px-4 bg-stone-950 border-t border-gold-500/30 text-center">
       <div class="max-w-4xl mx-auto">
         
-        <!-- Footer Monogram Crest -->
         <div class="relative w-16 h-16 rounded-full border-2 border-gold-400 bg-crimson-950 p-1 shadow-xl mx-auto mb-4 flex items-center justify-center overflow-hidden">
           <svg viewBox="0 0 720 720" class="w-full h-full text-gold-300">
             <use href="#aj-monogram" />
@@ -881,7 +930,6 @@
       const panelBottom = document.getElementById('panel-bottom');
       const mainWebsite = document.getElementById('main-website-root');
       const skipBtn = document.getElementById('skip-intro-btn');
-
       let hasOpened = false;
 
       function openInvitation() {
@@ -890,26 +938,28 @@
 
         playNavraiMajhi();
 
-        // Step 1: Open Envelope Flap in 3D
-        envelopeFlap.style.transform = 'rotateX(180deg)';
+        // Step 1: Open flap
+        if (envelopeFlap) {
+          envelopeFlap.style.transform = 'rotateX(180deg)';
+        }
 
+        // Step 2: Show trifold letter & fade out envelope box
         setTimeout(() => {
-          // Step 2: Fade Envelope Box, Reveal Tri-Fold Letter
-          envelopeBox.style.opacity = '0';
-          envelopeBox.style.transform = 'scale(0.85)';
-          
-          trifoldContainer.style.opacity = '1';
-          trifoldContainer.style.pointerEvents = 'auto';
+          if (envelopeBox) envelopeBox.style.opacity = '0';
+          if (trifoldContainer) {
+            trifoldContainer.classList.remove('pointer-events-none');
+            trifoldContainer.style.opacity = '1';
+          }
 
-          // Step 3: Unfold Top Flap UPWARDS
+          // Step 3: Unfold top panel (rotate up)
           setTimeout(() => {
-            panelTop.classList.add('unfolded-top');
-          }, 350);
+            if (panelTop) panelTop.classList.add('unfolded-top');
+          }, 400);
 
-          // Step 4: Unfold Bottom Flap DOWNWARDS
+          // Step 4: Unfold bottom panel (rotate down)
           setTimeout(() => {
-            panelBottom.classList.add('unfolded-bottom');
-          }, 850);
+            if (panelBottom) panelBottom.classList.add('unfolded-bottom');
+          }, 800);
 
           // Step 5: Transition to Main Website
           setTimeout(() => {
@@ -921,6 +971,7 @@
 
             setTimeout(() => {
               unveilOverlay.style.display = 'none';
+              showScrollGuidance();
             }, 1200);
 
           }, 2400);
@@ -938,8 +989,69 @@
           playNavraiMajhi();
           unveilOverlay.style.display = 'none';
           mainWebsite.style.opacity = '1';
+          setTimeout(showScrollGuidance, 500);
         });
       }
+
+      // 1.1 SCROLL GUIDANCE OVERLAY CONTROLLER
+      const scrollOverlay = document.getElementById('scroll-guidance-overlay');
+      let isScrollOverlayActive = false;
+      let hasDismissedScrollOverlay = false;
+
+      function showScrollGuidance() {
+        if (!scrollOverlay || hasDismissedScrollOverlay) return;
+        isScrollOverlayActive = true;
+        scrollOverlay.style.transition = 'opacity 0.25s ease-out';
+        scrollOverlay.classList.remove('pointer-events-none');
+        scrollOverlay.classList.remove('opacity-0');
+        scrollOverlay.classList.add('opacity-100');
+      }
+
+      function dismissScrollGuidance(smoothScroll = false) {
+        if (!scrollOverlay || hasDismissedScrollOverlay) return;
+        hasDismissedScrollOverlay = true;
+        isScrollOverlayActive = false;
+        scrollOverlay.style.transition = 'opacity 0.25s ease-out';
+        scrollOverlay.classList.remove('opacity-100');
+        scrollOverlay.classList.add('opacity-0');
+        scrollOverlay.classList.add('pointer-events-none');
+        setTimeout(() => {
+          scrollOverlay.style.display = 'none';
+        }, 250);
+
+        if (smoothScroll) {
+          const eventsSection = document.getElementById('events');
+          if (eventsSection) {
+            eventsSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }
+
+      if (scrollOverlay) {
+        scrollOverlay.addEventListener('click', () => dismissScrollGuidance(true));
+        scrollOverlay.addEventListener('pointerdown', () => dismissScrollGuidance(false));
+      }
+
+      // Ultra-sensitive dismiss listeners: triggers immediately on slightest scroll, swipe, or navigation
+      window.addEventListener('wheel', () => {
+        if (isScrollOverlayActive) dismissScrollGuidance(false);
+      }, { passive: true });
+
+      window.addEventListener('touchmove', () => {
+        if (isScrollOverlayActive) dismissScrollGuidance(false);
+      }, { passive: true });
+
+      window.addEventListener('scroll', () => {
+        if (isScrollOverlayActive && window.scrollY > 4) {
+          dismissScrollGuidance(false);
+        }
+      }, { passive: true });
+
+      window.addEventListener('keydown', (e) => {
+        if (isScrollOverlayActive && ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Space', ' '].includes(e.key)) {
+          dismissScrollGuidance(false);
+        }
+      });
 
       // 2. AMBIENT BACKGROUND PARTICLES (GOLD DUST)
       const canvas = document.getElementById('ambient-gold-canvas');
@@ -982,7 +1094,7 @@
         });
       }
 
-      // 3. AUDIO CONTROLLER: NAVRAI MAJHI (MP3 PLAYBACK & TOGGLE)
+      // 3. AUDIO CONTROLLER: NAVRAI MAJHI
       const audioElement = document.getElementById('navrai-audio-element');
       const audioBtn = document.getElementById('audio-toggle-btn');
       const audioIcon = document.getElementById('audio-icon');
@@ -998,7 +1110,7 @@
             isPlaying = true;
             updateAudioUI(true);
           }).catch(err => {
-            console.log("Audio waiting for user gesture:", err);
+            console.log("Audio waiting for user interaction:", err);
           });
         }
       }
@@ -1034,7 +1146,7 @@
         audioBtn.addEventListener('click', toggleNavraiMajhi);
       }
 
-      // 4. CAROUSEL SLIDER CONTROLLER (4 CEREMONIES)
+      // 4. CAROUSEL SLIDER CONTROLLER (4 SOLID CEREMONIES)
       const track = document.getElementById('carousel-track');
       const prevBtn = document.getElementById('carousel-prev');
       const nextBtn = document.getElementById('carousel-next');
@@ -1063,7 +1175,6 @@
         });
       }
 
-      // Initial pill styling
       updateSlide(0);
 
       if (nextBtn) nextBtn.addEventListener('click', () => updateSlide(currentSlide + 1));
