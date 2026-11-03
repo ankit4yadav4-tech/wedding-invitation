@@ -563,9 +563,9 @@
             <div class="w-full flex-shrink-0 px-2 md:px-4">
               <div class="relative overflow-hidden rounded-2xl border-2 border-emerald-500/80 bg-gradient-to-br from-[#021d12] via-[#032617] to-[#01140c] p-6 sm:p-8 md:p-12 text-center shadow-[0_20px_60px_rgba(2,29,18,0.9)]">
                 
-                <!-- TOP-LEFT: Bride & Groom in Emerald Green Illustration Badge -->
-                <div class="absolute top-3.5 left-3.5 sm:top-5 sm:left-5 z-20">
-                  <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-gold-400 bg-gradient-to-br from-[#062c1b] via-[#021d12] to-[#01120a] shadow-2xl p-0.5 overflow-hidden ring-2 ring-emerald-500/40">
+                <!-- TOP-LEFT: Bride & Groom in Emerald Green Illustration Badge (Desktop Only) -->
+                <div class="hidden md:block absolute top-5 left-5 z-20">
+                  <div class="relative w-20 h-20 rounded-full border-2 border-gold-400 bg-gradient-to-br from-[#062c1b] via-[#021d12] to-[#01120a] shadow-2xl p-0.5 overflow-hidden ring-2 ring-emerald-500/40">
                     <!-- Layered Image Loading: local asset -> hosted asset -> vector fallback -->
                     <img src="assets/mehndi_couple.png" alt="Mehndi Couple" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/image_generation_content/2330471365452109049'; this.onerror=function(){this.style.display='none'; document.getElementById('mehndi-svg-fallback').style.display='block';};">
                     
@@ -1100,6 +1100,7 @@
       const audioIcon = document.getElementById('audio-icon');
       const musicBars = document.querySelector('.music-bars');
       let isPlaying = false;
+      let wasPlayingBeforeTabSwitch = false;
 
       function playNavraiMajhi() {
         if (!audioElement) return;
@@ -1123,6 +1124,7 @@
       }
 
       function toggleNavraiMajhi() {
+        wasPlayingBeforeTabSwitch = false;
         if (isPlaying) {
           pauseNavraiMajhi();
         } else {
@@ -1145,6 +1147,33 @@
       if (audioBtn) {
         audioBtn.addEventListener('click', toggleNavraiMajhi);
       }
+
+      // Page Visibility & Tab Switch Audio Management
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          if (isPlaying) {
+            wasPlayingBeforeTabSwitch = true;
+            pauseNavraiMajhi();
+          }
+        } else if (document.visibilityState === 'visible' && !document.hidden) {
+          if (wasPlayingBeforeTabSwitch) {
+            wasPlayingBeforeTabSwitch = false;
+            playNavraiMajhi();
+          }
+        }
+      });
+
+      window.addEventListener('pagehide', () => {
+        if (isPlaying) {
+          pauseNavraiMajhi();
+        }
+      });
+
+      window.addEventListener('beforeunload', () => {
+        if (isPlaying) {
+          pauseNavraiMajhi();
+        }
+      });
 
       // 4. CAROUSEL SLIDER CONTROLLER (4 SOLID CEREMONIES)
       const track = document.getElementById('carousel-track');
